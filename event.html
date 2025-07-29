@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - Nepalese Society of Student Researchers (NSSR)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f8f8; /* Light gray background */
+        }
+        .section-heading {
+            font-size: 2.5rem; /* Larger heading for sections */
+            font-weight: 700;
+            color: #1a202c; /* Dark text for headings */
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 0; /* Removed padding from card itself, moved to inner div */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Align content to the left */
+            text-align: left; /* Align text to the left */
+            overflow: hidden; /* Ensures rounded corners apply to children */
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+        .btn-primary {
+            background-color: #004AAD; /* Primary Color: Deep Blue */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #003a8d; /* Darker shade of primary color */
+        }
+        .nav-link {
+            color: #4a5568; /* Gray text for nav links */
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .nav-link:hover {
+            background-color: #edf2f7; /* Light gray background on hover */
+            color: #2d3748; /* Darker gray text on hover */
+        }
+        /* Desktop Dropdown specific styles */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: #ffffff;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1000;
+            border-radius: 0.75rem; /* Rounded corners for dropdown */
+            padding: 0.5rem 0;
+            top: 100%; /* Position right below the parent */
+            left: 0;
+        }
+        .dropdown-menu a {
+            color: #4a5568;
+            padding: 0.75rem 1.5rem; /* Adjusted padding for better click area */
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            transition: background-color 0.2s ease;
+        }
+        .dropdown-menu a:hover {
+            background-color: #edf2f7;
+            color: #2d3748;
+        }
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        /* Mobile Dropdown specific styles */
+        .mobile-dropdown-btn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 1rem; /* Adjust padding to match nav-link */
+            color: #4a5568;
+            font-weight: 500;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .mobile-dropdown-btn:hover {
+            background-color: #edf2f7;
+            color: #2d3748;
+        }
+        .mobile-dropdown-content {
+            padding-left: 1.5rem; /* Indent sub-items */
+            padding-top: 0.25rem;
+            padding-bottom: 0.25rem;
+        }
+        .mobile-dropdown-content a {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: #4a5568;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            border-radius: 0.5rem;
+        }
+        .mobile-dropdown-content a:hover {
+            background-color: #e2e8f0; /* Slightly darker gray for sub-item hover */
+            color: #2d3748;
+        }
+
+        /* Event Card Specific Styles (similar to blog post cards) */
+        .event-card .event-image-placeholder {
+            width: 100%;
+            height: 150px;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .event-card .p-6 {
+            padding-top: 0;
+        }
+
+        /* Custom colors for event image placeholders */
+        .bg-blue-event { background-color: #3B82F6; } /* Blue-500 */
+        .bg-red-event { background-color: #EF4444; } /* Red-500 */
+        .bg-indigo-event { background-color: #6366F1; } /* Indigo-500 */
+        .bg-teal-event { background-color: #14B8A6; } /* Teal-500 */
+        .bg-orange-event { background-color: #F97316; } /* Orange-500 */
+
+        /* Animations for sections */
+        .animated-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .animated-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90%;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        .modal-overlay.show .modal-content {
+            transform: scale(1);
+        }
+        .modal-close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #4a5568;
+        }
+        .modal-close-button:hover {
+            color: #1a202c;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-md py-3 px-4 sticky top-0 z-50">
+        <div class="w-full flex justify-between items-center px-0">
+            <a href="index.html" class="rounded-lg p-2 flex items-center space-x-2 ml-0">
+                <img src="photos/bluelogonobg.png" alt="NSSR Logo" class="h-20">
+                <span class="text-2xl font-semibold text-[#004AAD] hidden sm:block">
+                    Nepalese Society of Student Researchers
+                </span>
+            </a>
+            <div class="hidden md:flex items-center space-x-2 lg:space-x-4">
+                <a href="index.html#hero" class="nav-link text-2xl">Home</a>
+
+                <!-- About Us Dropdown -->
+                <div class="relative group dropdown">
+                    <a href="index.html#about" class="nav-link inline-flex items-center text-2xl">
+                        About Us <i class="fas fa-chevron-down text-2xl ml-2"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="index.html#about" class="text-xl">About NSSR</a>
+                        <a href="index.html#objectives" class="text-xl">Our Objectives</a>
+                        <a href="team.html" class="text-xl">Our Team</a>
+                    </div>
+                </div>
+
+
+                <!-- Events Dropdown -->
+                <div class="relative group dropdown">
+                    <a href="event.html" class="nav-link inline-flex items-center text-2xl">
+                        Events <i class="fas fa fa-chevron-down text-2xl ml-2"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="event.html#upcoming-events" class="text-xl">Upcoming Events</a>
+                        <a href="event.html#past-events" class="text-xl">Past Events</a>
+                    </div>
+                </div>
+
+                <!-- Research Dropdown -->
+                <div class="relative group dropdown">
+                    <a href="research.html" class="nav-link inline-flex items-center text-2xl">
+                        Research <i class="fas fa-chevron-down text-2xl ml-2"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="research.html" class="text-xl">Focus Areas</a>
+                        <!-- These links will now be handled on the research.html page -->
+                    </div>
+                </div>
+
+                <!-- Membership Link added to main nav -->
+                <a href="membership.html" class="nav-link text-2xl">Membership</a>
+
+                <a href="blog.html" class="nav-link text-2xl">Blog</a>
+                <a href="index.html#contact" class="nav-link text-2xl">Contact</a>
+
+                <!-- Removed Login Button -->
+            </div>
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="md:hidden text-gray-600 focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white mt-2 rounded-lg shadow-lg py-2">
+            <a href="index.html#hero" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md">Home</a>
+
+            <!-- About Us Dropdown for mobile -->
+            <div class="mobile-dropdown">
+                <button class="mobile-dropdown-btn flex items-center justify-between w-full">
+                    About Us <i class="fas fa-chevron-down text-xs ml-2"></i>
+                </button>
+                <div class="mobile-dropdown-content hidden">
+                    <a href="index.html#about">About NSSR</a>
+                    <a href="index.html#objectives">Our Objectives</a>
+                    <a href="team.html">Our Team</a>
+                </div>
+            </div>
+
+            <!-- Events Dropdown for mobile -->
+            <div class="mobile-dropdown">
+                <button class="mobile-dropdown-btn flex items-center justify-between w-full">
+                    Events <i class="fas fa-chevron-down text-xs ml-2"></i>
+                </button>
+                <div class="mobile-dropdown-content hidden">
+                    <a href="event.html#upcoming-events">Upcoming Events</a>
+                    <a href="event.html#past-events">Past Events</a>
+                </div>
+            </div>
+
+            <!-- Research Dropdown for mobile -->
+            <div class="mobile-dropdown">
+                <button class="mobile-dropdown-btn flex items-center justify-between w-full">
+                    Research <i class="fas fa-chevron-down text-xs ml-2"></i>
+                </button>
+                <div class="mobile-dropdown-content hidden">
+                    <a href="research.html">Focus Areas</a>
+                    <!-- These links will now be handled on the research.html page -->
+                </div>
+            </div>
+
+            <!-- Membership Link added to mobile nav -->
+            <a href="membership.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md">Membership</a>
+
+            <a href="blog.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md">Blog</a>
+            <a href="index.html#contact" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Events Section -->
+    <section id="events" class="py-16 md:py-24 bg-gray-50 animated-section">
+        <div class="container mx-auto px-4">
+            <h2 class="section-heading">Our Events</h2>
+            <p class="text-center text-lg text-gray-600 mb-12 max-w-3xl mx-auto">
+                Discover our upcoming and past events, workshops, and seminars designed to foster research and scientific literacy.
+            </p>
+
+            <div class="mb-12">
+                <h3 id="upcoming-events" class="text-2xl font-bold text-[#004AAD] mb-6 text-center">Upcoming Events</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="upcoming-events-container">
+                    <!-- Upcoming events will be dynamically loaded here by JavaScript -->
+                </div>
+                <div class="text-center mt-8">
+                    <button id="view-all-upcoming-btn" class="btn-primary inline-block">View All Upcoming Events</button>
+                </div>
+            </div>
+
+            <div>
+                <h3 id="past-events" class="text-2xl font-bold text-[#004AAD] mb-6 text-center">Past Events</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="past-events-container">
+                    <!-- Past events will be dynamically loaded here by JavaScript -->
+                </div>
+                <div class="text-center mt-8">
+                    <button id="view-all-past-btn" class="btn-primary inline-block">View All Past Events</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Event Detail Modal -->
+    <div id="event-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-button" id="close-event-modal-btn">&times;</button>
+            <h3 id="modal-event-title" class="text-2xl font-bold text-[#004AAD] mb-4"></h3>
+            <p id="modal-event-meta" class="text-gray-500 text-sm mb-4"></p>
+            <div id="modal-event-content" class="text-gray-700 leading-relaxed">
+                <!-- Full event content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-10">
+        <div class="container mx-auto px-4 text-sm">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <!-- Column 1: Logo and Follow Us -->
+                <div class="flex flex-col items-center md:items-start text-center md:text-left">
+                    <img src="photos/logonobg.png" alt="NSSR Logo" class="h-32 mb-4 -ml-4">
+                    <!-- Corrected path for logonobg.png -->
+                    <h3 class="text-xl font-semibold mb-4">Follow Us</h3>
+                    <div class="flex space-x-4 justify-center md:justify-start">
+                        <a href="#" class="text-white hover:text-blue-200 text-2xl transition-colors"><i
+                                class="fab fa-facebook-square"></i></a>
+                        <a href="#" class="text-white hover:text-blue-200 text-2xl transition-colors"><i
+                                class="fab fa-twitter-square"></i></a>
+                        <a href="#" class="text-white hover:text-blue-200 text-2xl transition-colors"><i
+                                class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <!-- Column 2: Contact Us -->
+                <div class="text-center md:text-left">
+                    <h3 class="text-xl font-semibold mb-4">Contact Us</h3>
+                    <p class="mb-2"><i class="fas fa-envelope mr-3"></i>Email: <a href="mailto:info@nssr.org"
+                            class="hover:underline">info@nssr.org</a></p>
+                    <p class="mb-2"><i class="fas fa-phone-alt mr-3"></i>Phone: +977-1-1234567</p>
+                    <p class="mb-2"><i class="fas fa-map-marker-alt mr-3"></i>Address: Kathmandu, Nepal</p>
+                </div>
+
+                <!-- Column 3: Quick Links -->
+                <div class="text-center md:text-left">
+                    <h3 class="text-xl font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html#about" class="hover:underline">About Us</a></li>
+                        <li><a href="index.html#objectives" class="hover:underline">Our Objectives</a></li>
+                        <li><a href="event.html" class="hover:underline">Events</a></li>
+                        <li><a href="team.html" class="hover:underline">Our Team</a></li>
+                        <li><a href="membership.html" class="hover:underline">Membership Benefits</a></li>
+                        <li><a href="research.html" class="hover:underline">Research Areas</a></li>
+                        <li><a href="blog.html" class="hover:underline">Blog</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Our Newsletter -->
+<div class="text-center md:text-left md:col-span-2 lg:col-span-1">
+    <h3 class="text-xl font-semibold mb-4">Our Newsletter</h3>
+    <p class="mb-4">Stay up-to-date with the latest news and insights delivered straight to your inbox.</p>
+    <form id="newsletter-form" class="flex flex-col sm:flex-row gap-2">
+        <input type="email" name="_replyto" placeholder="Your Email"
+            class="p-2 rounded-lg text-gray-800 flex-grow w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-[#004AAD]"
+            required>
+        <button type="submit"
+            class="btn-primary px-4 py-2 rounded-lg w-full sm:w-auto bg-[#004AAD] text-white font-semibold hover:bg-blue-700 transition">
+            Subscribe
+        </button>
+    </form>
+    <p id="newsletter-success" class="text-green-600 mt-4 hidden">Successfully subscribed to our newsletter!</p>
+</div>
+
+<script>
+    const newsletterForm = document.getElementById("newsletter-form");
+    const newsletterSuccess = document.getElementById("newsletter-success");
+
+    newsletterForm.addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(newsletterForm);
+
+        try {
+            const response = await fetch("https://formspree.io/f/xrblkjko", {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json'
+                },
+                body: formData
+            });
+
+            if (response.ok) {
+                newsletterForm.reset();
+                newsletterSuccess.classList.remove("hidden");
+                newsletterSuccess.classList.remove("text-red-600");
+                newsletterSuccess.classList.add("text-green-600");
+                newsletterSuccess.innerText = "Successfully subscribed to our newsletter!";
+            } else {
+                newsletterSuccess.classList.remove("hidden");
+                newsletterSuccess.classList.remove("text-green-600");
+                newsletterSuccess.classList.add("text-red-600");
+                newsletterSuccess.innerText = "Subscription failed. Please try again.";
+            }
+        } catch (error) {
+            newsletterSuccess.classList.remove("hidden");
+            newsletterSuccess.classList.remove("text-green-600");
+            newsletterSuccess.classList.add("text-red-600");
+            newsletterSuccess.innerText = "Network error. Please check your connection.";
+        }
+    });
+</script>
+
+            </div>
+
+            <p class="mt-8 text-center">&copy; 2025 Nepalese Society of Student Researchers. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        // JavaScript for mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // New JavaScript for mobile dropdowns
+        document.querySelectorAll('.mobile-dropdown-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                content.classList.toggle('hidden');
+                // Rotate the chevron icon
+                const icon = button.querySelector('i');
+                if (icon) { // Check if icon exists to prevent errors
+                    icon.classList.toggle('fa-chevron-down');
+                    icon.classList.toggle('fa-chevron-up');
+                }
+            });
+        });
+
+        // Close mobile menu when a link inside a dropdown is clicked
+        mobileMenu.querySelectorAll('.mobile-dropdown-content a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                // Also hide the parent dropdown content
+                link.closest('.mobile-dropdown-content').classList.add('hidden');
+                // Reset chevron icon if visible
+                const icon = link.closest('.mobile-dropdown').querySelector('.mobile-dropdown-btn i');
+                if (icon) {
+                    icon.classList.remove('fa-chevron-up');
+                    icon.classList.add('fa-chevron-down');
+                }
+            });
+        });
+
+        // Event Data
+        const upcomingEvents = [
+            {
+                id: 'upcoming-1',
+                imageColor: 'bg-blue-event',
+                imageText: 'Event 1',
+                title: 'Quantum Computing Workshop',
+                shortDescription: 'An intensive workshop on the fundamentals and applications of quantum computing.',
+                fullContent: `
+                    <p class="mb-4">Join us for a comprehensive workshop designed to introduce students and researchers to the exciting field of quantum computing. This hands-on session will cover the basic principles of quantum mechanics relevant to computation, quantum algorithms, and practical applications using quantum programming frameworks.</p>
+                    <p class="mb-4">Participants will learn about qubits, superposition, entanglement, and quantum gates, and will have the opportunity to work through coding exercises. No prior knowledge of quantum mechanics is required, but a basic understanding of linear algebra and Python programming is recommended.</p>
+                    <p class="mb-4">This workshop is ideal for undergraduate and graduate students, faculty members, and anyone interested in exploring the future of computing. Limited seats available, so register early!</p>
+                    <p class="font-semibold mt-4">Key Topics:</p>
+                    <ul class="list-disc list-inside mb-4">
+                        <li>Introduction to Quantum Mechanics for Computing</li>
+                        <li>Qubits, Superposition, and Entanglement</li>
+                        <li>Quantum Gates and Circuits</li>
+                        <li>Basic Quantum Algorithms (e.g., Deutsch-Jozsa, Grover's)</li>
+                        <li>Quantum Programming with Qiskit/Cirq</li>
+                        <li>Applications of Quantum Computing</li>
+                    </ul>
+                    <p class="font-semibold">Instructor:</p>
+                    <p>Dr. Jane Doe, Lead Quantum Researcher</p>
+                `,
+                date: 'August 10, 2025',
+                category: 'Workshop',
+                buttonLabel: 'View Details'
+            },
+            {
+                id: 'upcoming-2',
+                imageColor: 'bg-red-event',
+                imageText: 'Event 2',
+                title: 'AI in Healthcare Seminar',
+                shortDescription: 'Exploring the impact of Artificial Intelligence on modern healthcare systems.',
+                fullContent: `
+                    <p class="mb-4">This seminar will delve into the transformative role of Artificial Intelligence (AI) in revolutionizing various aspects of healthcare. We will cover topics such as AI-powered diagnostics, personalized treatment plans, drug discovery, and efficient hospital management systems.</p>
+                    <p class="mb-4">Experts from both the medical and technological fields will share their insights, research findings, and real-world case studies. The seminar aims to bridge the gap between AI developers and healthcare professionals, fostering interdisciplinary collaboration for better patient outcomes.</p>
+                    <p class="mb-4">Attendees will gain a deeper understanding of the ethical considerations, challenges, and future prospects of integrating AI into healthcare infrastructure. This is a must-attend event for medical students, researchers, healthcare practitioners, and AI enthusiasts.</p>
+                    <p class="font-semibold mt-4">Highlights:</p>
+                    <ul class="list-disc list-inside mb-4">
+                        <li>Keynote speeches by leading AI and healthcare experts</li>
+                        <li>Panel discussion on ethical AI in medicine</li>
+                        <li>Demonstrations of AI diagnostic tools</li>
+                        <li>Networking opportunities</li>
+                    </ul>
+                    <p class="font-semibold">Speakers:</p>
+                    <p>Dr. John Smith, AI Ethicist; Dr. Emily White, Chief Medical Officer</p>
+                `,
+                date: 'September 5, 2025',
+                category: 'Seminar',
+                buttonLabel: 'View Details'
+            },
+            {
+                id: 'upcoming-3',
+                imageColor: 'bg-indigo-event',
+                imageText: 'Event 3',
+                title: 'Data Science for Environmental Research',
+                shortDescription: 'Application of data science techniques to analyze environmental data and address climate change.',
+                fullContent: `
+                    <p class="mb-4">This workshop focuses on equipping environmental scientists and researchers with essential data science skills. Participants will learn how to collect, clean, analyze, and visualize large environmental datasets using Python and R.</p>
+                    <p class="mb-4">Topics will include remote sensing data analysis, climate modeling, biodiversity informatics, and pollution monitoring using machine learning techniques. The workshop will emphasize practical applications and provide hands-on experience with real-world environmental data.</p>
+                    <p class="mb-4">Understanding and mitigating environmental challenges requires robust data analysis. This workshop aims to empower participants to make data-driven decisions and contribute effectively to environmental conservation and policy-making.</p>
+                    <p class="font-semibold mt-4">Learning Outcomes:</p>
+                    <ul class="list-disc list-inside mb-4">
+                        <li>Proficiency in environmental data acquisition and preprocessing</li>
+                        <li>Application of statistical and machine learning models to environmental problems</li>
+                        <li>Effective visualization of environmental trends</li>
+                        <li>Understanding of geospatial data analysis</li>
+                    </ul>
+                    <p class="font-semibold">Organizers:</p>
+                    <p>NSSR Environmental Research Group</p>
+                `,
+                date: 'October 1, 2025',
+                category: 'Workshop',
+                buttonLabel: 'View Details'
+            }
+        ];
+
+        const pastEvents = [
+            {
+                id: 'past-1',
+                imageColor: 'bg-teal-event',
+                imageText: 'Past Event 1',
+                title: 'Introduction to LaTeX for Researchers',
+                shortDescription: 'A beginner-friendly workshop on using LaTeX for academic writing and publications.',
+                fullContent: `
+                    <p class="mb-4">Our "Introduction to LaTeX" workshop, held on June 15, 2025, provided participants with the foundational skills to create professional-quality academic documents. LaTeX is widely used in scientific and technical fields for its superior typesetting capabilities, especially for mathematical equations and complex layouts.</p>
+                    <p class="mb-4">The session covered installation, basic document structure, text formatting, creating lists, tables, figures, and managing bibliographies. Attendees appreciated the hands-on exercises and the practical tips shared by the instructor.</p>
+                    <p class="mb-4">This workshop aimed to empower students and early-career researchers to produce high-quality papers, theses, and presentations efficiently. We received excellent feedback and plan to host more advanced LaTeX sessions in the future.</p>
+                    <p class="font-semibold mt-4">Key Takeaways:</p>
+                    <ul class="list-disc list-inside mb-4">
+                        <li>Mastering basic LaTeX commands</li>
+                        <li>Efficiently typesetting mathematical equations</li>
+                        <li>Creating professional tables and figures</li>
+                        <li>Managing citations and bibliographies</li>
+                    </ul>
+                    <p class="font-semibold">Date:</p>
+                    <p>June 15, 2025</p>
+                `,
+                date: 'June 15, 2025',
+                category: 'Workshop',
+                buttonLabel: 'View Recap'
+            },
+            {
+                id: 'past-2',
+                imageColor: 'bg-orange-event',
+                imageText: 'Past Event 2',
+                title: 'Nepal Physics Olympiad 2025',
+                shortDescription: 'National competition fostering excellence in physics among high school students.',
+                fullContent: `
+                    <p class="mb-4">The Nepal Physics Olympiad 2025, successfully concluded on May 20, 2025, was a thrilling national competition that brought together the brightest young minds in physics from across the country. Organized by NSSR in collaboration with leading academic institutions, the Olympiad aimed to identify and nurture talent in physics among high school students.</p>
+                    <p class="mb-4">Participants tackled challenging theoretical and experimental problems, testing their conceptual understanding, problem-solving skills, and scientific creativity. The event not only promoted academic excellence but also encouraged a spirit of healthy competition and camaraderie among the participants.</p>
+                    <p class="mb-4">The top performers were awarded scholarships and opportunities to represent Nepal in international physics competitions. We extend our heartfelt congratulations to all participants and look forward to even greater participation next year!</p>
+                    <p class="font-semibold mt-4">Highlights:</p>
+                    <ul class="list-disc list-inside mb-4">
+                        <li>Rigorous theoretical and experimental rounds</li>
+                        <li>Participation from over 100 schools nationwide</li>
+                        <li>Awards ceremony with distinguished guests</li>
+                        <li>Inspiring talks by renowned physicists</li>
+                    </ul>
+                    <p class="font-semibold">Date:</p>
+                    <p>May 20, 2025</p>
+                `,
+                date: 'May 20, 2025',
+                category: 'Competition',
+                buttonLabel: 'View Highlights'
+            },
+            {
+                id: 'past-3',
+                imageColor: 'bg-blue-event',
+                imageText: 'Past Event 3',
+                title: 'Research Methodology Seminar',
+                shortDescription: 'A seminar providing essential guidelines for conducting effective scientific research.',
+                fullContent: `
+                    <p class="mb-4">On April 10, 2025, NSSR hosted a highly informative Research Methodology Seminar, crucial for aspiring and current researchers. The seminar focused on the systematic approach to scientific inquiry, covering various stages from formulating research questions to data analysis and ethical considerations.</p>
+                    <p class="mb-4">Topics included literature review techniques, experimental design, qualitative and quantitative research methods, statistical analysis tools, and academic writing best practices. The interactive sessions allowed participants to clarify their doubts and gain practical insights from experienced researchers.</p>
+                    <p class="mb-4">The goal of this seminar was to equip attendees with the fundamental knowledge and skills required to conduct rigorous, impactful, and ethical research. We believe that strong research methodology is the backbone of credible scientific contributions.</p>
+                    <p class="font-semibold mt-4">Topics Covered:</p>
+                    <ul class="list-disc list-inside mb-4">
+                        <li>Defining Research Problems and Objectives</li>
+                        <li>Literature Review and Gap Analysis</li>
+                        <li>Research Design and Data Collection Methods</li>
+                        <li>Statistical Analysis and Interpretation</li>
+                        <li>Academic Writing and Publication Ethics</li>
+                    </ul>
+                    <p class="font-semibold">Date:</p>
+                    <p>April 10, 2025</p>
+                `,
+                date: 'April 10, 2025',
+                category: 'Seminar',
+                buttonLabel: 'View Recap'
+            }
+        ];
+
+        const upcomingEventsContainer = document.getElementById('upcoming-events-container');
+        const pastEventsContainer = document.getElementById('past-events-container');
+        const viewAllUpcomingBtn = document.getElementById('view-all-upcoming-btn');
+        const viewAllPastBtn = document.getElementById('view-all-past-btn');
+        const eventModal = document.getElementById('event-modal');
+        const closeEventModalBtn = document.getElementById('close-event-modal-btn');
+        const modalEventTitle = document.getElementById('modal-event-title');
+        const modalEventMeta = document.getElementById('modal-event-meta');
+        const modalEventContent = document.getElementById('modal-event-content');
+
+        const initialEventsToShow = 3; // Number of events to show initially for each section
+
+        // Function to render events
+        function renderEvents(container, eventsToRender) {
+            container.innerHTML = ''; // Clear existing events
+            eventsToRender.forEach(event => {
+                const card = document.createElement('div');
+                card.className = 'card event-card';
+                card.innerHTML = `
+                    <div class="event-image-placeholder ${event.imageColor}">
+                        ${event.imageText}
+                    </div>
+                    <div class="p-6 pt-0 w-full">
+                        <h3 class="text-xl font-semibold text-[#004AAD] mb-2">${event.title}</h3>
+                        <p class="text-gray-500 text-xs mb-2">
+                            <i class="fas fa-calendar-alt mr-1"></i> ${event.date} |
+                            <i class="fas fa-tag mr-1 ml-2"></i> ${event.category}
+                        </p>
+                        <p class="text-gray-600 text-sm mb-4">
+                            ${event.shortDescription}
+                        </p>
+                        <button class="btn-primary view-details-btn px-4 py-2 text-sm" data-id="${event.id}">
+                            ${event.buttonLabel}
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            // Re-attach event listeners for "View Details" buttons after rendering
+            container.querySelectorAll('.view-details-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const eventId = event.target.dataset.id;
+                    const eventData = [...upcomingEvents, ...pastEvents].find(e => e.id === eventId);
+                    if (eventData) {
+                        modalEventTitle.textContent = eventData.title;
+                        modalEventMeta.textContent = `Date: ${eventData.date} | Category: ${eventData.category}`;
+                        modalEventContent.innerHTML = eventData.fullContent;
+                        eventModal.classList.add('show');
+                    }
+                });
+            });
+        }
+
+        // Initial render: show only the first 3 upcoming and past events
+        renderEvents(upcomingEventsContainer, upcomingEvents.slice(0, initialEventsToShow));
+        renderEvents(pastEventsContainer, pastEvents.slice(0, initialEventsToShow));
+
+        // Event listener for "View All Upcoming Events" button
+        viewAllUpcomingBtn.addEventListener('click', () => {
+            renderEvents(upcomingEventsContainer, upcomingEvents);
+            viewAllUpcomingBtn.style.display = 'none';
+        });
+
+        // Event listener for "View All Past Events" button
+        viewAllPastBtn.addEventListener('click', () => {
+            renderEvents(pastEventsContainer, pastEvents);
+            viewAllPastBtn.style.display = 'none';
+        });
+
+        // Event listener for closing the modal
+        closeEventModalBtn.addEventListener('click', () => {
+            eventModal.classList.remove('show');
+        });
+
+        // Close modal if clicking outside the content
+        eventModal.addEventListener('click', (event) => {
+            if (event.target === eventModal) {
+                eventModal.classList.remove('show');
+            }
+        });
+
+        // Intersection Observer for animations
+        const animatedSections = document.querySelectorAll('.animated-section');
+
+        const observerOptions = {
+            root: null, // viewport
+            rootMargin: '0px',
+            threshold: 0.1 // Trigger when 10% of the element is visible
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target); // Stop observing once animated
+                }
+            });
+        }, observerOptions);
+
+        animatedSections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
