@@ -9,11 +9,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Google Fonts - Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts - Oswald (similar to Norwester) -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Oswald', sans-serif; /* Changed font to Oswald */
             background-color: #f8f8f8;
             /* Light gray background */
         }
@@ -343,13 +343,13 @@
                 <!-- About Us Dropdown -->
                 <div class="relative group dropdown">
                     <a href="index.html#about" class="nav-link inline-flex items-center text-lg md:text-xl">
-                        About Us <i class="fas fa-chevron-down text-base ml-2"></i>
+                        About <i class="fas fa-chevron-down text-base ml-2"></i> <!-- Changed "About Us" to "About" -->
                     </a>
                     <div class="dropdown-menu">
                         <!-- Adjusted dropdown menu text size -->
                         <a href="index.html#about" class="text-base">About NSSR</a>
-                        <a href="index.html#objectives" class="text-base">Our Objectives</a>
-                        <a href="team.html" class="text-base">Our Team</a>
+                        <!-- Removed Objectives link -->
+                        <a href="team.html" class="text-base">Who's Who</a> <!-- Changed "Our Team" to "Who's Who" -->
                     </div>
                 </div>
 
@@ -398,12 +398,12 @@
             <!-- About Us Dropdown for mobile -->
             <div class="mobile-dropdown">
                 <button class="mobile-dropdown-btn flex items-center justify-between w-full">
-                    About Us <i class="fas fa-chevron-down text-xs ml-2"></i>
+                    About <i class="fas fa-chevron-down text-xs ml-2"></i> <!-- Changed "About Us" to "About" -->
                 </button>
                 <div class="mobile-dropdown-content hidden">
                     <a href="index.html#about">About NSSR</a>
-                    <a href="index.html#objectives">Our Objectives</a>
-                    <a href="team.html">Our Team</a>
+                    <!-- Removed Objectives link -->
+                    <a href="team.html">Who's Who</a> <!-- Changed "Our Team" to "Who's Who" -->
                 </div>
             </div>
 
@@ -466,22 +466,14 @@
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row items-center gap-12 mb-16">
                 <div class="md:w-1/2 text-lg leading-relaxed text-gray-700">
-                    <p class="mb-6">
-                        The Nepalese Society of Student Researchers (NSSR) is a dynamic, youth-led initiative at the
-                        forefront of fostering a robust and inclusive environment for scientific inquiry in Nepal.
-                        Established by passionate young minds, NSSR is dedicated to advancing research across
-                        theoretical, experimental, and computational domains, while simultaneously championing
-                        scientific literacy for individuals of all ages and backgrounds across the nation.
+                    <p class="mb-6 text-justify">
+                        The Nepalese Society of Student Researchers (NSSR) is a nonprofit, youth-led membership organization established under the Companies Act, 2063 of Nepal. Dedicated to fostering a vibrant research culture in the country, NSSR seeks to nurture aspiring researchers and create a conducive environment for academic inquiry and innovation.
                     </p>
-                    <p class="mb-6">
-                        Our commitment extends to cultivating a new generation of scientists equipped with essential
-                        tools and knowledge. To achieve this, NSSR organizes a diverse array of interactive workshops,
-                        stimulating discussions, and impactful outreach programs designed to engage, educate, and
-                        inspire. We place a unique emphasis on foundational research in cutting-edge fields such as
-                        quantum mechanics, random matrix theory, and quantum computing, alongside providing
-                        comprehensive instruction in advanced mathematical software and analytical tools. Through these
-                        efforts, NSSR strives to elevate academic excellence and contribute significantly to Nepal's
-                        scientific advancement.
+                    <p class="mb-6 text-justify">
+                        Our mission is to bridge the gap between student researchers and established academics, providing a collaborative platform that promotes dialogue, mentorship, and scholarly engagement. Through this initiative, NSSR aspires to enhance academic excellence and make meaningful contributions to Nepal’s scientific and intellectual advancement. At the heart of our efforts is a commitment to empowering the next generation of scientists with the tools, knowledge, and support necessary to thrive in both national and global research landscapes.
+                    </p>
+                    <p class="mb-6 text-justify">
+                        NSSR further recognizes that the pursuit of scientific understanding should not be confined to academia alone. To this end, we are actively engaged in promoting scientific literacy across all strata of Nepalese society—empowering individuals from diverse backgrounds to think critically, engage with scientific knowledge, and make informed decisions in their everyday lives.
                     </p>
                 </div>
                 <div class="md:w-1/2 flex justify-center">
@@ -511,51 +503,89 @@
             </div>
     </section>
 
-    <!-- Our Objectives Section -->
+    <!-- Mission, Values, and Ethics Section -->
     <section id="objectives" class="py-16 md:py-24 bg-white animated-section">
         <div class="container mx-auto px-4">
-            <h2 class="section-heading">Our Objectives</h2>
+            <h2 class="section-heading">Mission, Values, and Ethics</h2>
             <p class="text-center text-lg text-gray-600 mb-12 max-w-3xl mx-auto">
-                At the Nepalese Society of Student Researchers (NSSR), our primary objectives are to cultivate a vibrant
-                research ecosystem, foster scientific literacy, and empower the next generation of scientific leaders in
-                Nepal. Through targeted programs and collaborative initiatives, we aim to bridge the gap between
-                theoretical understanding and practical application, ensuring science reaches every corner of our
-                nation.
+                NSSR is committed to advancing scientific inquiry and literacy through a clear mission, strong core values, and unwavering ethical commitments.
             </p>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Objective 1 Card: Foster Research & Innovation -->
+            <h3 class="text-2xl font-semibold text-[#004AAD] text-center mb-8">NSSR Seeks To:</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <!-- Objective 1 Card: To Promote Research Culture -->
                 <div class="card flex flex-col items-center text-center p-6 border-2 border-[#004AAD] objective-card">
-                    <h3 class="text-xl font-semibold text-[#004AAD] mb-3">Foster Research & Innovation</h3>
+                    <h3 class="text-xl font-semibold text-[#004AAD] mb-3">To Promote Research Culture</h3>
                     <p class="text-gray-600">
-                        To cultivate a robust environment for diverse research—encompassing theoretical, experimental,
-                        and computational approaches. We emphasize foundational studies in areas like quantum mechanics,
-                        random matrix theory, and quantum computing, equipping student researchers with advanced tools
-                        and knowledge to drive scientific advancement.
+                        Foster an environment that encourages academic inquiry, critical thinking, and innovation among students and early-career researchers.
                     </p>
                 </div>
 
-                <!-- Objective 2 Card: Promote Scientific Literacy -->
+                <!-- Objective 2 Card: To Promote Academic Integration and Mentorship -->
                 <div class="card flex flex-col items-center text-center p-6 border-2 border-[#004AAD] objective-card">
-                    <h3 class="text-xl font-semibold text-[#004AAD] mb-3">Promote Scientific Literacy</h3>
+                    <h3 class="text-xl font-semibold text-[#004AAD] mb-3">To Promote Academic Integration and Mentorship</h3>
                     <p class="text-gray-600">
-                        To champion scientific literacy across all age groups and social strata, ensuring that
-                        scientific understanding is accessible and engaging for everyone. We achieve this through a wide
-                        range of outreach programs, public discussions, and accessible educational content, striving to
-                        bring science to every corner of Nepal.
+                        Facilitate meaningful interaction between students, researchers, and established scholars, promoting mentorship and collaborative research.
                     </p>
                 </div>
 
-                <!-- Objective 3 Card: Cultivate Future Scientists & Leaders -->
+                <!-- Objective 3 Card: To Advance Scientific Literacy -->
                 <div class="card flex flex-col items-center text-center p-6 border-2 border-[#004AAD] objective-card">
-                    <h3 class="text-xl font-semibold text-[#004AAD] mb-3">Cultivate Future Scientists & Leaders</h3>
+                    <h3 class="text-xl font-semibold text-[#004AAD] mb-3">To Advance Scientific Literacy</h3>
                     <p class="text-gray-600">
-                        To empower and cultivate a new generation of theoretical and experimental scientists. We provide
-                        comprehensive workshops, mentorship opportunities, and access to essential mathematical software
-                        and analytical tools, nurturing critical thinking and problem-solving skills vital for academic
-                        excellence and future scientific leadership.
+                        Promote public understanding of science and the scientific method across all sectors of society, ensuring that science serves as a tool for informed decision-making.
                     </p>
                 </div>
+
+                <!-- New Objective Card: To Collaborate Nationally and Internationally -->
+                <div class="card flex flex-col items-center text-center p-6 border-2 border-[#004AAD] objective-card">
+                    <h3 class="text-xl font-semibold text-[#004AAD] mb-3">To Collaborate Nationally and Internationally</h3>
+                    <p class="text-gray-600">
+                        Work in partnership with national and international organizations.
+                    </p>
+                </div>
+
+                <!-- New Objective Card: To Promote Documentation and Publication -->
+                <div class="card flex flex-col items-center text-center p-6 border-2 border-[#004AAD] objective-card">
+                    <h3 class="text-xl font-semibold text-[#004AAD] mb-3">To Promote Documentation and Publication</h3>
+                    <p class="text-gray-600">
+                        Encourage the collection, creation, editing, and distribution of research materials, scientific literature, and academic publications.
+                    </p>
+                </div>
+            </div>
+
+            <h3 class="text-2xl font-semibold text-[#004AAD] text-center mb-8">Core Values</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <!-- Core Value 1 Card: Inclusivity and Accessibility -->
+                <div class="card flex flex-col items-center text-center p-6 border-2 border-[#004AAD] objective-card">
+                    <h3 class="text-xl font-semibold text-[#004AAD] mb-3">Inclusivity and Accessibility</h3>
+                    <p class="text-gray-600">
+                        Advocate for equal access to education and scientific opportunities for all, regardless of socio-economic background.
+                    </p>
+                </div>
+
+                <!-- Core Value 2 Card: Excellence and Integrity -->
+                <div class="card flex flex-col items-center text-center p-6 border-2 border-[#004AAD] objective-card">
+                    <h3 class="text-xl font-semibold text-[#004AAD] mb-3">Excellence and Integrity</h3>
+                    <p class="text-gray-600">
+                        Uphold the highest standards in academic work, ethical research, and organizational governance.
+                    </p>
+                </div>
+
+                <!-- Core Value 3 Card: Collaboration -->
+                <div class="card flex flex-col items-center text-center p-6 border-2 border-[#004AAD] objective-card">
+                    <h3 class="text-xl font-semibold text-[#004AAD] mb-3">Collaboration</h3>
+                    <p class="text-gray-600">
+                        Engage in partnerships with national and international institutions within the framework of governmental policies and global development goals.
+                    </p>
+                </div>
+            </div>
+
+            <h3 class="text-2xl font-semibold text-[#004AAD] text-center mb-8">Ethical Commitments</h3>
+            <div class="card p-6 border-2 border-[#004AAD] text-center">
+                <p class="text-gray-600 text-justify">
+                    NSSR conducts all activities in adherence to Nepal’s legal framework and global ethical standards. It maintains transparency, accountability, and a strong sense of civic responsibility in every aspect of its operation.
+                </p>
             </div>
         </div>
     </section>
@@ -626,7 +656,7 @@
             successMsg.classList.remove("hidden");
             successMsg.classList.remove("text-green-600");
             successMsg.classList.add("text-red-600");
-            successMsg.innerText = "Failed to submit. Check your connection.";
+            successMsg.innerText = "Network error. Please check your connection.";
         }
     });
 </script>

@@ -8,11 +8,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome for Icons (still included for other pages, but not used here) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Google Fonts - Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts - Oswald -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Oswald', sans-serif; /* Changed font to Oswald */
             background-color: #f8f8f8; /* Light gray background */
         }
         .section-heading {
@@ -204,7 +204,7 @@
                     Nepalese Society of Student Researchers
                 </span>
             </a>
-            <!-- Changed lg:flex to xl:flex for desktop menu visibility -->
+            <!-- Changed md:flex to xl:flex for desktop menu visibility -->
             <div class="hidden xl:flex items-center space-x-2 lg:space-x-4 xl:space-x-6">
                 <!-- Adjusted nav-link text size for responsiveness -->
                 <a href="index.html" class="nav-link text-lg md:text-xl">Home</a>
@@ -212,13 +212,12 @@
                 <!-- About Us Dropdown -->
                 <div class="relative group dropdown">
                     <a href="index.html#about" class="nav-link inline-flex items-center text-lg md:text-xl">
-                        About Us <i class="fas fa-chevron-down text-base ml-2"></i>
+                        About <i class="fas fa-chevron-down text-base ml-2"></i>
                     </a>
                     <div class="dropdown-menu">
                         <!-- Adjusted dropdown menu text size -->
                         <a href="index.html#about" class="text-base">About NSSR</a>
-                        <a href="index.html#objectives" class="text-base">Our Objectives</a>
-                        <a href="team.html" class="text-base">Our Team</a>
+                        <a href="team.html" class="text-base">Who's Who</a>
                     </div>
                 </div>
 
@@ -255,7 +254,7 @@
 
                 <!-- Removed Login Button -->
             </div>
-            <!-- Mobile Menu Button - Changed lg:hidden to xl:hidden -->
+            <!-- Mobile Menu Button - Changed md:hidden to xl:hidden -->
             <button id="mobile-menu-button" class="xl:hidden text-gray-600 focus:outline-none">
                 <i class="fas fa-bars text-2xl"></i>
             </button>
@@ -267,12 +266,11 @@
             <!-- About Us Dropdown for mobile -->
             <div class="mobile-dropdown">
                 <button class="mobile-dropdown-btn flex items-center justify-between w-full">
-                    About Us <i class="fas fa-chevron-down text-xs ml-2"></i>
+                    About <i class="fas fa-chevron-down text-xs ml-2"></i>
                 </button>
                 <div class="mobile-dropdown-content hidden">
                     <a href="index.html#about">About NSSR</a>
-                    <a href="index.html#objectives">Our Objectives</a>
-                    <a href="team.html">Our Team</a>
+                    <a href="team.html">Who's Who</a>
                 </div>
             </div>
 
