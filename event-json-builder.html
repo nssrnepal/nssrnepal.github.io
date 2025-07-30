@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Post JSON Builder</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts - Oswald -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Oswald', sans-serif;
+            background-color: #f8f8f8;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 960px;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 2rem;
+        }
+        .btn-primary {
+            background-color: #004AAD;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #003a8d;
+        }
+        .btn-secondary {
+            background-color: #6B7280; /* Gray */
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background-color: #4B5563; /* Darker Gray */
+        }
+        .btn-danger {
+            background-color: #EF4444; /* Red */
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        .btn-danger:hover {
+            background-color: #DC2626; /* Darker Red */
+        }
+        input[type="text"],
+        input[type="date"],
+        input[type="time"], /* Added time input */
+        textarea,
+        select,
+        input[type="password"] {
+            border: 1px solid #D1D5DB;
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 1rem;
+            color: #333;
+        }
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        input[type="time"]:focus, /* Added time input */
+        textarea:focus,
+        select:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #004AAD;
+            box-shadow: 0 0 0 2px rgba(0, 74, 173, 0.2);
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #4A5568;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .content-block-item {
+            border: 1px solid #E5E7EB;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            background-color: #F9FAFB;
+        }
+        .editable-content {
+            border: 1px solid #D1D5DB;
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            min-height: 100px;
+            background-color: white;
+            font-size: 1rem;
+            color: #333;
+            outline: none;
+            box-sizing: border-box;
+            line-height: 1.6;
+        }
+        .editable-content:focus {
+            border-color: #004AAD;
+            box-shadow: 0 0 0 2px rgba(0, 74, 173, 0.2);
+        }
+        pre {
+            background-color: #1a202c;
+            color: #f8f8f8;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            overflow-x: auto;
+            font-family: monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        /* Login Modal Styles */
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .login-modal {
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .login-modal h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #004AAD;
+            margin-bottom: 1.5rem;
+        }
+        .login-modal .form-group {
+            margin-bottom: 1rem;
+        }
+        .login-modal .error-message {
+            color: #EF4444;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body class="p-8">
+
+    <!-- Login Overlay -->
+    <div id="login-overlay" class="login-overlay">
+        <div class="login-modal">
+            <h2>Enter ID and Password</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-id">ID:</label>
+                    <input type="text" id="login-id" required autofocus>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password:</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                <button type="submit" class="btn-primary w-full mt-4">Login</button>
+                <p id="login-error-message" class="error-message hidden"></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="tool-content" class="container mx-auto hidden">
+        <h1 class="text-4xl font-bold text-center text-[#004AAD] mb-8">Event Post JSON Builder</h1>
+
+        <div class="card mb-8">
+            <h2 class="text-2xl font-semibold text-[#004AAD] mb-6">Event Details</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="form-group">
+                    <label for="event-id">Event ID (Unique, e.g., 'event-name-date'):</label>
+                    <input type="text" id="event-id" required placeholder="e.g., 'annual-seminar-2025-08-15'">
+                </div>
+                <div class="form-group">
+                    <label for="event-title">Title:</label>
+                    <input type="text" id="event-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="event-short-description">Short Description:</label>
+                    <textarea id="event-short-description" rows="2" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="event-type">Event Type:</label>
+                    <select id="event-type" required>
+                        <option value="Workshop">Workshop</option>
+                        <option value="Seminar">Seminar</option>
+                        <option value="Conference">Conference</option>
+                        <option value="Outreach">Outreach Program</option>
+                        <option value="Webinar">Webinar</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="event-date">Date:</label>
+                    <input type="date" id="event-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="event-time">Time:</label>
+                    <input type="time" id="event-time" required>
+                </div>
+                <div class="form-group">
+                    <label for="event-location">Location:</label>
+                    <input type="text" id="event-location" required placeholder="e.g., Online, Kathmandu University, Zoom Link">
+                </div>
+                <div class="form-group">
+                    <label for="event-organizer">Organizer:</label>
+                    <input type="text" id="event-organizer" value="NSSR Team" required>
+                </div>
+                <div class="form-group">
+                    <label for="event-button-label">Button Label (e.g., 'View Details', 'Register Now'):</label>
+                    <input type="text" id="event-button-label" value="View Details">
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-8">
+            <h2 class="text-2xl font-semibold text-[#004AAD] mb-6">Content Blocks (Full Description)</h2>
+            <div id="content-blocks-container">
+                <!-- Content blocks will be dynamically added here -->
+            </div>
+            <button id="add-text-block-btn" class="btn-secondary mr-2"><i class="fas fa-plus mr-2"></i>Add Text Block</button>
+            <button id="add-image-text-block-btn" class="btn-secondary"><i class="fas fa-plus mr-2"></i>Add Image + Text Block</button>
+            <p class="text-sm text-gray-600 mt-4">
+                <strong>Tip:</strong> Use Ctrl+B for bold, Ctrl+I for italics, Ctrl+U for underline inside the content areas. Press Enter for new paragraphs. Use `$` for inline LaTeX and `$$` for display LaTeX.
+            </p>
+        </div>
+
+        <div class="text-center mb-8">
+            <button id="generate-json-btn" class="btn-primary text-xl"><i class="fas fa-code mr-3"></i>Generate JSON</button>
+        </div>
+
+        <div class="card hidden" id="json-output-card">
+            <h2 class="text-2xl font-semibold text-[#004AAD] mb-6">Generated JSON</h2>
+            <pre id="json-output" class="mb-4"></pre>
+            <button id="copy-json-btn" class="btn-primary"><i class="fas fa-copy mr-2"></i>Copy JSON to Clipboard</button>
+            <p id="copy-status" class="text-sm mt-2 hidden"></p>
+        </div>
+    </div>
+
+    <script>
+        // --- Login Logic ---
+        const loginOverlay = document.getElementById('login-overlay');
+        const loginForm = document.getElementById('login-form');
+        const loginIdInput = document.getElementById('login-id');
+        const loginPasswordInput = document.getElementById('login-password');
+        const loginErrorMessage = document.getElementById('login-error-message');
+        const toolContent = document.getElementById('tool-content');
+
+        // IMPORTANT: These are the credentials for this tool.
+        const PLAIN_TEXT_CORRECT_ID = 'nssrnepal';
+        const PLAIN_TEXT_CORRECT_PASSWORD = 'nssr@nepal';
+
+        let HASHED_CORRECT_ID;
+        let HASHED_CORRECT_PASSWORD;
+
+        const SESSION_STORAGE_KEY = 'eventJsonBuilderLoggedIn'; // Unique key for event builder
+
+        // Function to hash a string using SHA-256
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hexHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            return hexHash;
+        }
+
+        async function initializeHashes() {
+            HASHED_CORRECT_ID = await sha256(PLAIN_TEXT_CORRECT_ID);
+            HASHED_CORRECT_PASSWORD = await sha256(PLAIN_TEXT_CORRECT_PASSWORD);
+            console.log("Hashed ID (for reference, do not share):", HASHED_CORRECT_ID);
+            console.log("Hashed Password (for reference, do not share):", HASHED_CORRECT_PASSWORD);
+        }
+
+        async function checkLoginStatus() {
+            await initializeHashes();
+
+            if (sessionStorage.getItem(SESSION_STORAGE_KEY) === HASHED_CORRECT_ID) {
+                showTool();
+            } else {
+                showLogin();
+            }
+        }
+
+        function showLogin() {
+            loginOverlay.classList.remove('hidden');
+            toolContent.classList.add('hidden');
+            loginIdInput.focus();
+        }
+
+        function showTool() {
+            loginOverlay.classList.add('hidden');
+            toolContent.classList.remove('hidden');
+            // Initialize with one text block when tool is shown
+            addTextBlock();
+        }
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const enteredId = loginIdInput.value;
+            const enteredPassword = loginPasswordInput.value;
+
+            const hashedEnteredId = await sha256(enteredId);
+            const hashedEnteredPassword = await sha256(enteredPassword);
+
+            if (hashedEnteredId === HASHED_CORRECT_ID && hashedEnteredPassword === HASHED_CORRECT_PASSWORD) {
+                sessionStorage.setItem(SESSION_STORAGE_KEY, HASHED_CORRECT_ID);
+                showTool();
+            } else {
+                loginErrorMessage.textContent = 'Invalid ID or Password.';
+                loginErrorMessage.classList.remove('hidden');
+            }
+        });
+
+        // --- Event Builder Logic ---
+        const contentBlocksContainer = document.getElementById('content-blocks-container');
+        const addTextBlockBtn = document.getElementById('add-text-block-btn');
+        const addImageTextBlockBtn = document.getElementById('add-image-text-block-btn');
+        const generateJsonBtn = document.getElementById('generate-json-btn');
+        const jsonOutputCard = document.getElementById('json-output-card');
+        const jsonOutput = document.getElementById('json-output');
+        const copyJsonBtn = document.getElementById('copy-json-btn');
+        const copyStatus = document.getElementById('copy-status');
+
+        let blockCounter = 0;
+        let imageBlockCounter = 0;
+
+        // Function to apply formatting
+        function formatText(command, value = null) {
+            document.execCommand(command, false, value);
+        }
+
+        // Event listener for contenteditable divs for formatting
+        function addContentEditableListeners(element) {
+            element.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    document.execCommand('insertHTML', false, '<p><br></p>');
+                } else if (e.ctrlKey || e.metaKey) {
+                    if (e.key === 'b') {
+                        e.preventDefault();
+                        formatText('bold');
+                    } else if (e.key === 'i') {
+                        e.preventDefault();
+                        formatText('italic');
+                    } else if (e.key === 'u') {
+                        e.preventDefault();
+                        formatText('underline');
+                    }
+                }
+            });
+        }
+
+        function addTextBlock() {
+            blockCounter++;
+            const blockDiv = document.createElement('div');
+            blockDiv.className = 'content-block-item';
+            blockDiv.innerHTML = `
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-semibold text-gray-700">Text Block ${blockCounter}</h3>
+                    <button class="remove-block-btn btn-danger text-sm"><i class="fas fa-trash-alt"></i> Remove</button>
+                </div>
+                <div class="form-group">
+                    <label for="text-content-${blockCounter}">Text Content (HTML & LaTeX allowed):</label>
+                    <div id="text-content-${blockCounter}" class="editable-content" contenteditable="true" data-type="text-only" required placeholder="Your paragraph content here. Use HTML tags like <p>, <strong>, <ul>, <li>. For LaTeX, use $ for inline and $$ for display."></div>
+                </div>
+            `;
+            contentBlocksContainer.appendChild(blockDiv);
+            blockDiv.querySelector('.remove-block-btn').addEventListener('click', () => blockDiv.remove());
+            addContentEditableListeners(blockDiv.querySelector('.editable-content'));
+        }
+
+        function addImageTextBlock() {
+            blockCounter++;
+            imageBlockCounter++;
+            const blockDiv = document.createElement('div');
+            blockDiv.className = 'content-block-item';
+            blockDiv.innerHTML = `
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-semibold text-gray-700">Image + Text Block ${blockCounter}</h3>
+                    <button class="remove-block-btn btn-danger text-sm"><i class="fas fa-trash-alt"></i> Remove</button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="form-group">
+                        <label for="image-layout-${blockCounter}">Image Layout:</label>
+                        <select id="image-layout-${blockCounter}" class="content-input" data-type="image-text-layout" required>
+                            <option value="image-left">Image Left</option>
+                            <option value="image-right">Image Right</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Generated Image Filename:</label>
+                        <p class="text-gray-600 text-sm mt-2" id="image-filename-${blockCounter}">
+                            (Filename will be generated based on Event ID)
+                        </p>
+                    </div>
+                    <div class="form-group col-span-full">
+                        <label for="image-text-content-${blockCounter}">Text Content (HTML & LaTeX allowed):</label>
+                        <div id="image-text-content-${blockCounter}" class="editable-content" contenteditable="true" data-type="image-text-content" required placeholder="Your paragraph content here that will wrap around the image. Use HTML tags like <p>, <strong>, <ul>, <li>. For LaTeX, use $ for inline and $$ for display."></div>
+                    </div>
+                </div>
+            `;
+            contentBlocksContainer.appendChild(blockDiv);
+            blockDiv.querySelector('.remove-block-btn').addEventListener('click', () => blockDiv.remove());
+            addContentEditableListeners(blockDiv.querySelector('.editable-content'));
+        }
+
+        addTextBlockBtn.addEventListener('click', addTextBlock);
+        addImageTextBlockBtn.addEventListener('click', addImageTextBlock);
+
+        generateJsonBtn.addEventListener('click', () => {
+            const eventIdInput = document.getElementById('event-id');
+            const eventId = eventIdInput.value.trim();
+
+            if (!eventId) {
+                alert("Please enter an Event ID before generating JSON.");
+                eventIdInput.focus();
+                return;
+            }
+
+            const eventTitle = document.getElementById('event-title').value;
+            const eventShortDescription = document.getElementById('event-short-description').value;
+            const eventType = document.getElementById('event-type').value;
+            const eventDate = document.getElementById('event-date').value;
+            const eventTime = document.getElementById('event-time').value;
+            const eventLocation = document.getElementById('event-location').value;
+            const eventOrganizer = document.getElementById('event-organizer').value;
+            const eventButtonLabel = document.getElementById('event-button-label').value;
+
+            // Construct cover image URL
+            const coverImageUrl = `photos/events/${eventId}/cover.jpg`;
+
+            const contentBlocks = [];
+            let currentImageCount = 0;
+            document.querySelectorAll('.content-block-item').forEach(blockDiv => {
+                const textContentElement = blockDiv.querySelector('div[data-type="text-only"]');
+                const imageLayoutElement = blockDiv.querySelector('select[data-type="image-text-layout"]');
+
+                if (textContentElement) {
+                    const content = textContentElement.innerHTML;
+                    contentBlocks.push({
+                        type: 'text-only',
+                        content: content
+                    });
+                } else if (imageLayoutElement) {
+                    currentImageCount++;
+                    const layout = imageLayoutElement.value;
+                    const imageUrl = `photos/events/${eventId}/image${currentImageCount}.jpg`;
+
+                    const content = blockDiv.querySelector('div[data-type="image-text-content"]').innerHTML;
+                    contentBlocks.push({
+                        type: 'image-text',
+                        layout: layout,
+                        image: {
+                            url: imageUrl
+                        },
+                        content: content
+                    });
+                }
+            });
+
+            const newEventObject = {
+                id: eventId,
+                coverImageUrl: coverImageUrl,
+                title: eventTitle,
+                shortDescription: eventShortDescription,
+                type: eventType,
+                date: eventDate,
+                time: eventTime,
+                location: eventLocation,
+                organizer: eventOrganizer,
+                buttonLabel: eventButtonLabel,
+                contentBlocks: contentBlocks
+            };
+
+            jsonOutput.textContent = JSON.stringify(newEventObject, null, 2);
+            jsonOutputCard.classList.remove('hidden');
+
+            // Update generated filenames display
+            let tempImageCounter = 0;
+            document.querySelectorAll('.content-block-item').forEach(blockDiv => {
+                const imageFilenameDisplay = blockDiv.querySelector('[id^="image-filename-"]');
+                if (imageFilenameDisplay) {
+                    tempImageCounter++;
+                    imageFilenameDisplay.textContent = `Expected: photos/events/${eventId}/image${tempImageCounter}.jpg`;
+                }
+            });
+        });
+
+        copyJsonBtn.addEventListener('click', () => {
+            const textToCopy = jsonOutput.textContent;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    copyStatus.textContent = 'Copied to clipboard!';
+                    copyStatus.classList.remove('hidden');
+                    copyStatus.style.color = 'green';
+                    setTimeout(() => copyStatus.classList.add('hidden'), 3000);
+                }).catch(err => {
+                    console.error('Failed to copy text: ', err);
+                    copyStatus.textContent = 'Failed to copy!';
+                    copyStatus.classList.remove('hidden');
+                    copyStatus.style.color = 'red';
+                    setTimeout(() => copyStatus.classList.add('hidden'), 3000);
+                });
+            } else {
+                const textArea = document.createElement("textarea");
+                textArea.value = textToCopy;
+                textArea.style.position = "fixed";
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    copyStatus.textContent = 'Copied to clipboard!';
+                    copyStatus.classList.remove('hidden');
+                    copyStatus.style.color = 'green';
+                    setTimeout(() => copyStatus.classList.add('hidden'), 3000);
+                } catch (err) {
+                    console.error('Fallback: Oops, unable to copy', err);
+                    copyStatus.textContent = 'Failed to copy!';
+                    copyStatus.classList.remove('hidden');
+                    copyStatus.style.color = 'red';
+                    setTimeout(() => copyStatus.classList.add('hidden'), 3000);
+                }
+                document.body.removeChild(textArea);
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', checkLoginStatus);
+    </script>
+</body>
+</html>
