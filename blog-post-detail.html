@@ -10,6 +10,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Fonts - Oswald -->
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- MathJax for LaTeX rendering -->
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <script>
+        // MathJax configuration
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
     <style>
         body {
             font-family: 'Oswald', sans-serif;
@@ -101,12 +116,11 @@
         }
 
         /* Blog Post Detail Specific Styles */
-        .blog-detail-image {
+        .blog-detail-image-placeholder {
             width: 100%;
             height: 300px; /* Increased height for a more prominent image */
             object-fit: cover;
             border-radius: 1rem;
-            margin-bottom: 2rem;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -117,21 +131,24 @@
         .bg-purple-blog { background-color: #8B5CF6; }
         .bg-green-blog { background-color: #22C55E; }
         .bg-yellow-blog { background-color: #FACC15; }
+        .bg-blue-blog { background-color: #3B82F6; } /* Added for example */
+        .bg-red-blog { background-color: #EF4444; } /* Added for example */
 
-        .blog-content p {
+
+        .blog-content-block p {
             margin-bottom: 1rem;
             line-height: 1.75;
             text-align: justify;
         }
-        .blog-content ul {
+        .blog-content-block ul {
             list-style-type: disc;
             margin-left: 1.5rem;
             margin-bottom: 1rem;
         }
-        .blog-content li {
+        .blog-content-block li {
             margin-bottom: 0.5rem;
         }
-        .blog-content strong {
+        .blog-content-block strong {
             font-weight: 600;
         }
     </style>
@@ -219,18 +236,15 @@
 
     <!-- Blog Post Detail Section -->
     <section class="py-16 md:py-24 bg-gray-50">
-        <div class="container mx-auto px-4 max-w-4xl">
-            <div class="bg-white rounded-lg shadow-lg p-8">
-                <div id="blog-image" class="blog-detail-image rounded-lg mb-6">
-                    <!-- Image will be loaded here -->
-                </div>
+        <div class="container mx-auto px-4 max-w-6xl"> <!-- Changed max-w-4xl to max-w-6xl -->
+            <div class="bg-white rounded-lg shadow-lg p-8 relative">
                 <h1 id="blog-title" class="text-3xl md:text-4xl font-bold text-[#004AAD] mb-4"></h1>
                 <p class="text-gray-600 text-sm mb-6">
                     <span id="blog-published-date"><i class="fas fa-calendar-alt mr-1"></i></span> |
                     <span id="blog-author"><i class="fas fa-user mr-1 ml-2"></i></span>
                 </p>
-                <div id="blog-content" class="blog-content text-gray-700">
-                    <!-- Full blog content will be loaded here -->
+                <div id="blog-content" class="text-gray-700">
+                    <!-- Full blog content blocks will be loaded here -->
                 </div>
                 <div class="mt-8 text-center">
                     <a href="blog.html" class="inline-block bg-[#004AAD] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#003a8d] transition">
@@ -280,7 +294,7 @@
                             class="p-2 rounded-lg text-gray-800 flex-grow w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-[#004AAD]"
                             required>
                         <button type="submit"
-                            class="btn-primary px-4 py-2 rounded-lg w-full sm:w-auto bg-[#004AAD] text-white font-semibold hover:bg-blue-700 transition">
+                            class="btn-primary px-4 py-2 rounded-lg w-full sm:w-auto bg-[#004AAD] text-white font-semibold hover:bg-[#003a8d] transition">
                             Subscribe
                         </button>
                     </form>
@@ -357,7 +371,7 @@
             }
         });
 
-        // Blog Post Data (duplicated from blog.html for simplicity)
+        // Blog Post Data (updated with contentBlocks)
         const blogPosts = [
             {
                 id: 'post-1',
@@ -365,14 +379,45 @@
                 imageText: 'Quantum Computing',
                 title: 'The Future of Quantum Computing in Nepal',
                 shortDescription: 'An in-depth look at the potential of quantum computing and NSSR\'s role in its development.',
-                fullContent: `
-                    <p class="mb-4">Quantum computing represents a paradigm shift in computation, leveraging the principles of quantum mechanics to solve problems intractable for classical computers. In Nepal, the journey into quantum computing is just beginning, but the potential for groundbreaking research and applications is immense.</p>
-                    <p class="mb-4">This article delves into the current landscape of quantum computing globally and discusses how Nepal can position itself to contribute to this revolutionary field. We explore the role of education, international collaborations, and government support in building a quantum-ready workforce and infrastructure.</p>
-                    <p class="mb-4">From cryptography to drug discovery and materials science, quantum computing promises to revolutionize various sectors. NSSR is committed to fostering an environment where students can learn, experiment, and innovate in this exciting domain, preparing them for the challenges and opportunities of the quantum era.</p>
-                    <p>Join us in exploring how Nepal can harness the power of quantum computing for its scientific and economic development.</p>
-                `,
                 publishedDate: 'July 25, 2025',
-                author: 'NSSR Team'
+                author: 'NSSR Team',
+                buttonLabel: 'Read Article',
+                contentBlocks: [
+                    {
+                        type: 'text-only',
+                        content: `<p class="mb-4">Quantum computing represents a paradigm shift in computation, leveraging the principles of quantum mechanics to solve problems intractable for classical computers. In Nepal, the journey into quantum computing is just beginning, but the potential for groundbreaking research and applications is immense. This ambitious endeavor requires significant investment in education, infrastructure, and international collaboration to truly flourish.</p>
+                                  <p class="mb-4">This article delves into the current landscape of quantum computing globally, highlighting key advancements and the major players in the field. It then discusses how Nepal, despite being a developing nation, can strategically position itself to contribute to this revolutionary field. We explore the crucial role of specialized education programs, fostering international partnerships, and securing government support in building a quantum-ready workforce and the necessary research infrastructure. Our aim is to cultivate a new generation of scientists and engineers capable of pushing the boundaries of technology.</p>`
+                    },
+                    {
+                        type: 'image-text',
+                        layout: 'image-left',
+                        image: {
+                            color: 'bg-purple-blog',
+                            text: 'Quantum Lab'
+                        },
+                        content: `<p class="mb-4">From revolutionizing cryptography and enhancing cybersecurity to accelerating drug discovery and materials science, quantum computing promises to transform various sectors in unprecedented ways. The ability to simulate complex molecular structures and optimize intricate systems could lead to breakthroughs in medicine, energy, and environmental sustainability. NSSR is deeply committed to fostering an environment where students can learn, experiment, and innovate in this exciting and rapidly evolving domain, preparing them for the challenges and immense opportunities of the quantum era.</p>
+                                  <p>Join us in exploring how Nepal can harness the power of quantum computing for its scientific and economic development, paving the way for a technologically advanced and prosperous future.</p>`
+                    },
+                    {
+                        type: 'text-only',
+                        content: `
+                            <h3 class="text-2xl font-semibold text-[#004AAD] mb-4">Key Topics Covered in Quantum Computing:</h3>
+                            <ul class="list-disc list-inside mb-4">
+                                <li><strong>Introduction to Quantum Mechanics for Computing:</strong> Understanding the foundational principles.</li>
+                                <li><strong>Qubits, Superposition, and Entanglement:</strong> The building blocks of quantum information.</li>
+                                <li><strong>Quantum Gates and Circuits:</strong> How quantum operations are performed.</li>
+                                <li><strong>Basic Quantum Algorithms (e.g., Deutsch-Jozsa, Grover's, Shor's):</strong> Exploring algorithms that outperform classical counterparts.</li>
+                                <li><strong>Quantum Programming with Qiskit/Cirq:</strong> Hands-on experience with leading quantum software development kits.</li>
+                                <li><strong>Applications of Quantum Computing:</strong> Real-world impact in various industries.</li>
+                                <li><strong>Challenges and Future Outlook:</strong> Discussing the hurdles and the exciting possibilities ahead.</li>
+                            </ul>
+                            <p class="mb-4">Our research initiatives in quantum computing are designed to be interdisciplinary, bringing together experts from physics, computer science, and engineering. We believe that a collaborative approach is essential to tackle the complex problems in this field and to ensure that Nepal plays a meaningful role in the global quantum revolution.</p>
+                            <p>For more information on our quantum computing programs and how to get involved, please contact us directly or visit our research section.</p>
+                            <p class="mt-4">Let's consider a simple quantum operation. A Hadamard gate transforms a qubit in state $|0\rangle$ to a superposition state $\frac{1}{\sqrt{2}}(|0\rangle + |1\rangle)$. This can be represented by the matrix: $$H = \frac{1}{\sqrt{2}} \\begin{pmatrix} 1 & 1 \\\\ 1 & -1 \\end{pmatrix}$$</p>
+                            <p>Another fundamental concept is entanglement. If we have two entangled qubits, measuring one instantly affects the other, regardless of distance. This non-local correlation is key to quantum advantage. For example, the Bell state $\\frac{1}{\sqrt{2}}(|00\\rangle + |11\\rangle)$ demonstrates this principle.</p>
+                        `
+                    }
+                ]
             },
             {
                 id: 'post-2',
@@ -380,14 +425,41 @@
                 imageText: 'Scientific Literacy',
                 title: 'Recap: Our Latest Scientific Literacy Outreach',
                 shortDescription: 'Highlights from our recent community engagement program, bringing science to local schools.',
-                fullContent: `
-                    <p class="mb-4">Access to reliable and sustainable energy remains a critical challenge in many rural areas of Nepal. This blog post examines various renewable energy technologies, such as micro-hydro, solar, and wind power, and their feasibility for decentralized energy solutions.</p>
-                    <p class="mb-4">We discuss case studies of successful implementations, the socio-economic impact of these projects on local communities, and the policy frameworks required to scale up renewable energy adoption across the country. Emphasis is placed on community-led initiatives and innovative financing models.</p>
-                    <p class="mb-4">NSSR researchers are actively involved in projects aimed at developing and deploying sustainable energy solutions that are both environmentally friendly and economically viable for rural populations. Our work focuses on practical research that directly addresses the energy needs of underserved communities.</p>
-                    <p>Discover how sustainable energy can light up lives and power progress in remote Nepal.</p>
-                `,
                 publishedDate: 'July 10, 2025',
-                author: 'Outreach Team'
+                author: 'Outreach Team',
+                buttonLabel: 'View Recap',
+                contentBlocks: [
+                    {
+                        type: 'text-only',
+                        content: `<p class="mb-4">Our recent scientific literacy outreach program successfully engaged over 500 students across various schools in Kathmandu, marking a significant step towards demystifying science for young minds. The initiative was driven by our passionate volunteers who believe in making scientific knowledge accessible and exciting for everyone, regardless of their background.</p>
+                                  <p class="mb-4">During the program, volunteers conducted a diverse array of interactive sessions, hands-on experiments, and stimulating discussions on topics ranging from fundamental environmental science principles to basic physics concepts. The enthusiasm from both students and teachers was truly overwhelming, underscoring the critical need for such educational programs in our community. We observed a genuine curiosity and eagerness to learn among the students, which further fuels our commitment to these initiatives.</p>`
+                    },
+                    {
+                        type: 'image-text',
+                        layout: 'image-right',
+                        image: {
+                            color: 'bg-green-blog',
+                            text: 'School Outreach'
+                        },
+                        content: `<p class="mb-4">This outreach is an integral part of NSSR's broader commitment to promoting scientific literacy across all strata of Nepalese society. We firmly believe that a scientifically informed populace is not just beneficial but crucial for national development, enabling informed decision-making and fostering innovation. By empowering individuals with critical thinking skills and scientific knowledge, we aim to build a society that can effectively address both local and global challenges.</p>
+                                  <p>We extend our heartfelt gratitude to all participants, dedicated volunteers, and supportive partner schools for making this program a resounding success. Your involvement is invaluable. Stay tuned for more such impactful initiatives as we continue our mission to spread scientific awareness!</p>`
+                    },
+                    {
+                        type: 'text-only',
+                        content: `
+                            <h3 class="text-2xl font-semibold text-[#004AAD] mb-4">Highlights of the Outreach Program:</h3>
+                            <ul class="list-disc list-inside mb-4">
+                                <li><strong>Interactive Science Demonstrations:</strong> Engaging experiments that brought scientific concepts to life.</li>
+                                <li><strong>Q&A Sessions with Young Scientists:</strong> Opportunities for students to interact directly with researchers.</li>
+                                <li><strong>Distribution of Educational Materials:</strong> Providing resources for continued learning.</li>
+                                <li><strong>Positive Feedback from Students and Faculty:</strong> Overwhelmingly positive responses from all stakeholders.</li>
+                                <li><strong>Community Engagement:</strong> Strengthening ties with local communities through education.</li>
+                            </ul>
+                            <p class="mb-4">The success of this program reinforces our belief in the power of community engagement to inspire the next generation of scientists and critical thinkers. We are excited to build on this momentum and expand our reach in the coming months.</p>
+                            <p>For collaboration opportunities or to volunteer for future outreach programs, please reach out to our team.</p>
+                        `
+                    }
+                ]
             },
             {
                 id: 'post-3',
@@ -395,14 +467,44 @@
                 imageText: 'Random Matrix Theory',
                 title: 'Understanding Random Matrix Theory: A Beginner\'s Guide',
                 shortDescription: 'An accessible introduction to the complex world of random matrix theory and its applications.',
-                fullContent: `
-                    <p class="mb-4">Artificial Intelligence (AI) and Machine Learning (ML) are rapidly transforming industries worldwide, from healthcare to finance and entertainment. This article provides an overview of recent advancements in AI, including deep learning, natural language processing, and computer vision.</p>
-                    <p class="mb-4">We explore how these technologies are being applied to solve complex problems, enhance efficiency, and create new opportunities. The discussion also covers the ethical considerations and societal implications of widespread AI adoption, emphasizing the need for responsible innovation.</p>
-                    <p class="mb-4">NSSR is at the forefront of AI and ML research in Nepal, encouraging students to engage with these powerful tools. Our workshops and projects aim to equip the next generation of researchers with the skills to develop and deploy intelligent systems that benefit society.</p>
-                    <p>Learn about the cutting-edge of AI and ML and their potential to reshape our future.</p>
-                `,
                 publishedDate: 'June 30, 2025',
-                author: 'Research Head'
+                author: 'Research Head',
+                buttonLabel: 'Read Guide',
+                contentBlocks: [
+                    {
+                        type: 'text-only',
+                        content: `<p class="mb-4">Random Matrix Theory (RMT) is a fascinating and increasingly relevant field of mathematics with surprising applications across incredibly diverse disciplines, from the intricate world of quantum physics to the unpredictable fluctuations of financial markets and even the complex networks of neuroscience. For beginners, the concept of random matrices can initially seem daunting due to its abstract nature, but its core ideas are remarkably elegant and possess immense predictive power.</p>
+                                  <p class="mb-4">This comprehensive guide aims to provide an accessible and intuitive introduction to RMT, carefully explaining its fundamental concepts without requiring extensive prior knowledge in advanced mathematics or physics. We will delve into what random matrices truly are, explore the various definitions of "randomness" within this context, and uncover how their statistical properties can effectively model and predict the behavior of complex systems where individual components are too numerous or too intricate to track deterministically. Our journey will highlight the universality of RMT's predictions.</p>`
+                    },
+                    {
+                        type: 'image-text',
+                        layout: 'image-left',
+                        image: {
+                            color: 'bg-yellow-blog',
+                            text: 'Matrix Model'
+                        },
+                        content: `<p class="mb-4">From precisely predicting the spacing of energy levels in atomic nuclei and the behavior of disordered systems to analyzing the fluctuations of stock market prices and the connectivity patterns in brain networks, Random Matrix Theory provides a powerful and universal framework for understanding and quantifying randomness in large, complex systems. Its profound beauty lies in its remarkable ability to predict macroscopic, emergent behavior from microscopic disorder, offering insights where traditional deterministic approaches fall short. This universality makes RMT an indispensable tool for modern scientific inquiry across countless domains.</p>
+                                  <p>Join us on a captivating journey to demystify random matrices and discover their pervasive and often unexpected influence in the scientific and technological world. This guide will equip you with the foundational understanding to appreciate the elegance and utility of RMT in various cutting-edge research areas.</p>`
+                    },
+                    {
+                        type: 'text-only',
+                        content: `
+                            <h3 class="text-2xl font-semibold text-[#004AAD] mb-4">Key Concepts Covered in This Guide:</h3>
+                            <ul class="list-disc list-inside mb-4">
+                                <li><strong>What are Random Matrices?:</strong> Defining the core objects of study and their properties.</li>
+                                <li><strong>Eigenvalue Distributions (Wigner Semicircle Law):</strong> Understanding the statistical patterns of eigenvalues.</li>
+                                <li><strong>Universality Classes:</strong> Exploring how different random matrix ensembles exhibit similar statistical properties.</li>
+                                <li><strong>Applications in Physics, Engineering, and Data Science:</strong> Real-world examples of RMT's predictive power.</li>
+                                <li><strong>Introduction to Gaussian Ensembles:</strong> Delving into the most commonly studied ensembles (GOE, GUE, GSE).</li>
+                                <li><strong>Spectral Rigidity and Level Repulsion:</strong> Key phenomena observed in random matrix spectra.</li>
+                            </ul>
+                            <p class="mb-4">Our goal is to make RMT accessible to a wider audience, encouraging more students and researchers to explore its potential. This guide serves as a stepping stone to more advanced topics and research in the field.</p>
+                            <p>For further reading and resources, please refer to the suggested materials in our research section.</p>
+                            <p class="mt-4">Consider a simple random matrix $A$ where its elements are drawn from a Gaussian distribution. The probability density function of its eigenvalues often follows the Wigner semicircle law: $$p(x) = \\frac{2}{\\pi R^2} \\sqrt{R^2 - x^2}$$ for $|x| \\le R$. Here, $R$ is a parameter related to the variance of the matrix elements.</p>
+                            <p>This law is a cornerstone of RMT and shows up in many unexpected places, from nuclear physics to complex networks.</p>
+                        `
+                    }
+                ]
             },
             {
                 id: 'post-4',
@@ -410,14 +512,41 @@
                 imageText: 'Data Science',
                 title: 'The Role of Data Science in Public Health',
                 shortDescription: 'How data science is transforming public health initiatives and disease prevention strategies.',
-                fullContent: `
-                    <p class="mb-4">Data science is revolutionizing public health by providing powerful tools for analyzing complex datasets, identifying trends, and predicting disease outbreaks. This article highlights key applications of data science in public health, including epidemiological modeling, personalized medicine, and resource allocation.</p>
-                    <p class="mb-4">We examine how big data analytics, machine learning algorithms, and statistical methods are used to inform public health policies, optimize interventions, and improve patient outcomes. The importance of data privacy and ethical considerations in health data management is also discussed.</p>
-                    <p class="mb-4">NSSR promotes interdisciplinary research that leverages data science to address pressing public health challenges in Nepal. Our initiatives aim to build capacity in data analysis and contribute to evidence-based decision-making in the health sector.</p>
-                    <p>Explore how data science is shaping a healthier future for communities.</p>
-                `,
                 publishedDate: 'July 5, 2025',
-                author: 'NSSR Team'
+                author: 'NSSR Team',
+                buttonLabel: 'Read Article',
+                contentBlocks: [
+                    {
+                        type: 'text-only',
+                        content: `<p class="mb-4">Data science is revolutionizing public health by providing powerful tools for analyzing complex datasets, identifying trends, and predicting disease outbreaks. This article highlights key applications of data science in public health, including epidemiological modeling, personalized medicine, and resource allocation.</p>
+                                  <p class="mb-4">The ability to process and interpret vast amounts of health data, from electronic health records to social media trends, allows public health officials to make more informed decisions and implement targeted interventions. This leads to more efficient resource utilization and improved public health outcomes.</p>`
+                    },
+                    {
+                        type: 'image-text',
+                        layout: 'image-right',
+                        image: {
+                            color: 'bg-purple-blog',
+                            text: 'Health Data'
+                        },
+                        content: `<p class="mb-4">We examine how big data analytics, machine learning algorithms, and advanced statistical methods are used to inform public health policies, optimize interventions, and ultimately improve patient outcomes. From predicting the spread of infectious diseases to identifying populations at risk for chronic conditions, data science provides actionable insights. The importance of data privacy, security, and ethical considerations in health data management is also discussed, emphasizing the need for responsible data practices.</p>
+                                  <p class="mb-4">NSSR actively promotes interdisciplinary research that leverages data science to address pressing public health challenges in Nepal. Our initiatives aim to build capacity in data analysis and contribute to evidence-based decision-making in the health sector, fostering a healthier nation through scientific innovation.</p>
+                                  <p>Explore how data science is shaping a healthier future for communities, enabling proactive health management and effective crisis response.</p>`
+                    },
+                    {
+                        type: 'text-only',
+                        content: `
+                            <h3 class="text-2xl font-semibold text-[#004AAD] mb-4">Key Areas of Impact:</h3>
+                            <ul class="list-disc list-inside mb-4">
+                                <li><strong>Epidemiological Modeling:</strong> Predicting disease outbreaks and spread.</li>
+                                <li><strong>Personalized Medicine:</strong> Tailoring treatments based on individual data.</li>
+                                <li><strong>Resource Allocation:</strong> Optimizing distribution of healthcare resources.</li>
+                                <li><strong>Disease Surveillance:</strong> Real-time monitoring of public health indicators.</li>
+                                <li><strong>Health Policy Formulation:</strong> Informing decisions with data-driven insights.</li>
+                            </ul>
+                            <p>Our commitment is to foster research that has a tangible impact on the well-being of the Nepalese population.</p>
+                        `
+                    }
+                ]
             },
             {
                 id: 'post-5',
@@ -425,14 +554,41 @@
                 imageText: 'Biodiversity',
                 title: 'Protecting Nepal\'s Biodiversity',
                 shortDescription: 'Research and conservation efforts to safeguard Nepal\'s rich and unique biological diversity.',
-                fullContent: `
-                    <p class="mb-4">Nepal is a global biodiversity hotspot, home to a remarkable array of flora and fauna. However, this rich natural heritage faces significant threats from climate change, habitat loss, and illegal wildlife trade. This article outlines the critical importance of biodiversity conservation in Nepal.</p>
-                    <p class="mb-4">We discuss various research and conservation efforts underway, including species monitoring, habitat restoration, and community-based conservation programs. The role of scientific research in understanding ecological processes and informing conservation strategies is emphasized.</p>
-                    <p class="mb-4">NSSR supports research initiatives focused on biodiversity conservation, encouraging students to engage in ecological studies, environmental monitoring, and sustainable resource management. Our goal is to contribute to the long-term protection of Nepal\'s unique ecosystems.</p>
-                    <p>Learn how science is helping to preserve the natural wonders of Nepal for future generations.</p>
-                `,
                 publishedDate: 'June 28, 2025',
-                author: 'NSSR Team'
+                author: 'NSSR Team',
+                buttonLabel: 'View Recap',
+                contentBlocks: [
+                    {
+                        type: 'text-only',
+                        content: `<p class="mb-4">Nepal is a global biodiversity hotspot, boasting an extraordinary array of flora and fauna, from the high Himalayas to the lowland Terai. However, this incredibly rich natural heritage faces significant and growing threats from climate change, rapid habitat loss due to human encroachment, and rampant illegal wildlife trade. This article outlines the critical importance of biodiversity conservation in Nepal, emphasizing its ecological, economic, and cultural value.</p>
+                                  <p class="mb-4">The unique geographical position of Nepal, with its diverse climatic zones, supports a wide range of ecosystems, making it home to numerous endemic species. Protecting this biodiversity is not just an environmental imperative but also crucial for sustainable development and the well-being of local communities who depend directly on these natural resources.</p>`
+                    },
+                    {
+                        type: 'image-text',
+                        layout: 'image-left',
+                        image: {
+                            color: 'bg-green-blog',
+                            text: 'Wildlife'
+                        },
+                        content: `<p class="mb-4">We discuss various research and conservation efforts currently underway across the country, including comprehensive species monitoring programs, large-scale habitat restoration projects, and innovative community-based conservation initiatives that empower local populations to become stewards of their environment. The pivotal role of rigorous scientific research in understanding complex ecological processes, assessing conservation status, and informing effective conservation strategies is emphasized. Our work aims to provide actionable data for policymakers and conservation practitioners.</p>
+                                  <p class="mb-4">NSSR strongly supports research initiatives focused on biodiversity conservation, actively encouraging students to engage in ecological studies, environmental monitoring, and research into sustainable resource management practices. Our ultimate goal is to contribute significantly to the long-term protection and preservation of Nepal\'s unique and irreplaceable ecosystems, ensuring their resilience for future generations.</p>
+                                  <p>Learn how science is helping to preserve the natural wonders of Nepal for future generations, fostering a harmonious coexistence between humans and nature.</p>`
+                    },
+                    {
+                        type: 'text-only',
+                        content: `
+                            <h3 class="text-2xl font-semibold text-[#004AAD] mb-4">Conservation Strategies and Research Focus:</h3>
+                            <ul class="list-disc list-inside mb-4">
+                                <li><strong>Species Monitoring:</strong> Tracking populations of endangered and key species.</li>
+                                <li><strong>Habitat Restoration:</strong> Rebuilding degraded ecosystems.</li>
+                                <li><strong>Community-Based Conservation:</strong> Engaging local communities in conservation efforts.</li>
+                                <li><strong>Climate Change Impact Studies:</strong> Assessing and mitigating effects on biodiversity.</li>
+                                <li><strong>Sustainable Resource Management:</strong> Promoting practices that balance human needs with environmental protection.</li>
+                            </ul>
+                            <p>Your involvement in our research and conservation efforts can make a real difference.</p>
+                        `
+                    }
+                ]
             },
             {
                 id: 'post-6',
@@ -440,14 +596,42 @@
                 imageText: 'Energy Storage',
                 title: 'Innovations in Renewable Energy Storage',
                 shortDescription: 'Exploring cutting-edge technologies for efficient and scalable energy storage solutions.',
-                fullContent: `
-                    <p class="mb-4">The intermittency of renewable energy sources like solar and wind necessitates efficient energy storage solutions to ensure a stable and reliable power supply. This article explores recent innovations in energy storage technologies, from advanced battery systems to pumped-hydro and thermal storage.</p>
-                    <p class="mb-4">We delve into the scientific principles behind these technologies, their current state of development, and their potential to integrate renewables into the national grid and provide off-grid solutions. The economic viability and environmental impact of different storage methods are also considered.</p>
-                    <p class="mb-4">NSSR encourages research into novel energy storage solutions that can address Nepal\'s specific energy challenges. Our students are engaged in exploring new materials, optimizing system designs, and evaluating the performance of various storage technologies.</p>
-                    <p>Discover how breakthroughs in energy storage are paving the way for a fully renewable energy future.</p>
-                `,
                 publishedDate: 'June 20, 2025',
-                author: 'NSSR Team'
+                author: 'NSSR Team',
+                buttonLabel: 'Read Guide',
+                contentBlocks: [
+                    {
+                        type: 'text-only',
+                        content: `<p class="mb-4">The inherent intermittency of renewable energy sources like solar and wind power necessitates the development of highly efficient and scalable energy storage solutions to ensure a stable and reliable electricity supply. This article explores recent groundbreaking innovations in energy storage technologies, ranging from advanced battery systems to large-scale pumped-hydro and thermal storage solutions, all crucial for a sustainable energy future.</p>
+                                  <p class="mb-4">The global transition to renewable energy hinges on our ability to store excess energy generated during peak production times and release it when demand is high or renewable generation is low. This challenge drives continuous research and development in various storage technologies, each with its unique advantages and limitations.</p>`
+                    },
+                    {
+                        type: 'image-text',
+                        layout: 'image-right',
+                        image: {
+                            color: 'bg-yellow-blog',
+                            text: 'Energy Grid'
+                        },
+                        content: `<p class="mb-4">We delve into the scientific principles behind these diverse technologies, examining their current state of development, operational efficiencies, and their immense potential to seamlessly integrate renewables into national grids while also providing robust off-grid solutions for remote areas. The economic viability, environmental impact, and lifecycle assessment of different storage methods are also critically considered, ensuring a holistic understanding of their sustainability. This comprehensive analysis helps in identifying the most promising technologies for specific applications.</p>
+                                  <p class="mb-4">NSSR actively encourages and supports research into novel energy storage solutions that can specifically address Nepal\'s unique energy challenges, including grid stability and rural electrification. Our dedicated students and researchers are engaged in exploring new materials for batteries, optimizing system designs for various scales, and rigorously evaluating the performance and scalability of different storage technologies. This hands-on approach ensures that our research is directly applicable to national needs.</p>
+                                  <p>Discover how breakthroughs in energy storage are paving the way for a fully renewable energy future, empowering communities and fostering energy independence.</p>`
+                    },
+                    {
+                        type: 'text-only',
+                        content: `
+                            <h3 class="text-2xl font-semibold text-[#004AAD] mb-4">Emerging Energy Storage Technologies:</h3>
+                            <ul class="list-disc list-inside mb-4">
+                                <li><strong>Advanced Battery Systems:</strong> Lithium-ion, Solid-state, Flow batteries.</li>
+                                <li><strong>Pumped-Hydro Storage:</strong> Large-scale, proven technology.</li>
+                                <li><strong>Thermal Energy Storage:</strong> Storing heat or cold for later use.</li>
+                                <li><strong>Hydrogen Storage:</strong> Power-to-gas solutions.</li>
+                                <li><strong>Flywheel Energy Storage:</strong> Mechanical energy storage for short bursts.</li>
+                                <li><strong>Compressed Air Energy Storage (CAES):</strong> Storing air underground.</li>
+                            </ul>
+                            <p>Our research aims to contribute to a sustainable and resilient energy landscape for Nepal and beyond.</p>
+                        `
+                    }
+                ]
             }
         ];
 
@@ -459,27 +643,64 @@
             return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
         };
 
+        // Function to render blog post content
+        function renderBlogPostContent(post, blogContentDiv) {
+            blogContentDiv.innerHTML = ''; // Clear existing content
+            post.contentBlocks.forEach(block => {
+                let blockHtml = '';
+                if (block.type === 'text-only') {
+                    blockHtml = `<div class="blog-content-block mb-8">${block.content}</div>`;
+                } else if (block.type === 'image-text') {
+                    const imageHtml = `<div class="md:w-1/2">
+                                            <div class="blog-detail-image-placeholder ${block.image.color} rounded-lg h-64 md:h-full">
+                                                ${block.image.text}
+                                            </div>
+                                       </div>`;
+                    const textHtml = `<div class="md:w-1/2 blog-content-block">
+                                          ${block.content}
+                                      </div>`;
+                    if (block.layout === 'image-left') {
+                        blockHtml = `<div class="flex flex-col md:flex-row gap-8 mb-8 items-center">
+                                        ${imageHtml}
+                                        ${textHtml}
+                                     </div>`;
+                    } else if (block.layout === 'image-right') {
+                        blockHtml = `<div class="flex flex-col md:flex-row-reverse gap-8 mb-8 items-center">
+                                        ${imageHtml}
+                                        ${textHtml}
+                                     </div>`;
+                    }
+                }
+                blogContentDiv.innerHTML += blockHtml;
+            });
+            // After rendering, typeset the math
+            if (window.MathJax) {
+                window.MathJax.typesetPromise();
+            }
+        }
+
+        // Main function to load blog post
         document.addEventListener('DOMContentLoaded', () => {
             const postId = getUrlParameter('id');
             const post = blogPosts.find(p => p.id === postId);
+            const blogContentDiv = document.getElementById('blog-content');
+            const pageTitleElement = document.getElementById('page-title');
+            const blogTitleElement = document.getElementById('blog-title');
+            const blogPublishedDateElement = document.getElementById('blog-published-date');
+            const blogAuthorElement = document.getElementById('blog-author');
 
             if (post) {
-                document.getElementById('page-title').textContent = post.title + ' - NSSR Blog';
-                document.getElementById('blog-title').textContent = post.title;
-                document.getElementById('blog-published-date').innerHTML = `<i class="fas fa-calendar-alt mr-1"></i> ${post.publishedDate}`;
-                document.getElementById('blog-author').innerHTML = `<i class="fas fa-user mr-1 ml-2"></i> ${post.author}`;
-                document.getElementById('blog-content').innerHTML = post.fullContent;
-
-                const blogImageDiv = document.getElementById('blog-image');
-                blogImageDiv.className = `blog-detail-image ${post.imageColor} rounded-lg mb-6`;
-                blogImageDiv.textContent = post.imageText; // Display text inside the image placeholder
+                pageTitleElement.textContent = post.title + ' - NSSR Blog';
+                blogTitleElement.textContent = post.title;
+                blogPublishedDateElement.innerHTML = `<i class="fas fa-calendar-alt mr-1"></i> ${post.publishedDate}`;
+                blogAuthorElement.innerHTML = `<i class="fas fa-user mr-1 ml-2"></i> ${post.author}`;
+                renderBlogPostContent(post, blogContentDiv);
             } else {
-                // Handle case where post is not found
-                document.getElementById('page-title').textContent = 'Post Not Found - NSSR Blog';
-                document.getElementById('blog-title').textContent = 'Blog Post Not Found';
-                document.getElementById('blog-published-date').textContent = '';
-                document.getElementById('blog-author').textContent = '';
-                document.getElementById('blog-content').innerHTML = '<p>The requested blog post could not be found. Please go back to the <a href="blog.html" class="text-[#004AAD] hover:underline">blog page</a>.</p>';
+                pageTitleElement.textContent = 'Post Not Found - NSSR Blog';
+                blogTitleElement.textContent = 'Blog Post Not Found';
+                blogPublishedDateElement.textContent = '';
+                blogAuthorElement.textContent = '';
+                blogContentDiv.innerHTML = '<p>The requested blog post could not be found. Please go back to the <a href="blog.html" class="text-[#004AAD] hover:underline">blog page</a>.</p>';
             }
         });
 
