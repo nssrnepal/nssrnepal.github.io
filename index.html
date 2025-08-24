@@ -13,8 +13,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Oswald', sans-serif; /* Changed font to Oswald */
-            background-color: #f8f8f8;
+            font-family: 'Oswald', sans-serif;
+            /* Changed font to Oswald */
+            background-color: #EFF6FF; /* Updated to #EFF6FF */
             /* Light gray background */
         }
 
@@ -168,62 +169,6 @@
             color: #2d3748;
         }
 
-
-        /* Hero Slider Specific Styles */
-        .hero-slider-bg {
-            background-size: cover;
-            background-position: center;
-            transition: background-image 1s ease-in-out;
-            /* Smooth transition for image change */
-            position: relative;
-            /* Needed for pseudo-element positioning */
-        }
-
-        .hero-slider-bg::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            /* Increased opacity for better text readability */
-            z-index: 1;
-            /* Below text content, above background image */
-        }
-
-        .hero-slider-content {
-            position: relative;
-            z-index: 10;
-            /* Ensure content is above the overlay */
-        }
-
-        .slider-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            padding: 1rem 0.75rem;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            z-index: 20;
-            /* Above content, below nav */
-            transition: background-color 0.3s ease;
-        }
-
-        .slider-arrow:hover {
-            background-color: rgba(0, 0, 0, 0.7);
-        }
-
-        .slider-arrow.left {
-            left: 1rem;
-        }
-
-        .slider-arrow.right {
-            right: 1rem;
-        }
-
         /* Team Member Card Specific Styles (for index.html as well) */
         .team-member-card .image-social-container {
             position: relative;
@@ -306,8 +251,6 @@
             /* Ensure text inside also turns white */
         }
 
-        /* Removed contact-form-card hover styles */
-
         /* Animations for sections */
         .animated-section {
             opacity: 0;
@@ -318,6 +261,34 @@
         .animated-section.is-visible {
             opacity: 1;
             transform: translateY(0);
+        }
+
+        /* Custom styles for the hero canvas background */
+        #hero {
+            position: relative;
+            /* Needed for absolute positioning of canvas */
+            overflow: hidden;
+            /* Hide particles outside the section */
+            background-color: #EFF6FF; /* Ensure hero section uses the new soft blue */
+        }
+
+        #hero-background-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            /* Place behind content */
+            pointer-events: none;
+            /* Allow clicks to pass through to content */
+        }
+
+        #hero-content {
+            position: relative;
+            /* Ensure content is above canvas */
+            z-index: 2;
+            /* Place above canvas */
         }
     </style>
 </head>
@@ -437,29 +408,43 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="hero"
-        class="relative bg-transparent text-white py-20 md:py-32 overflow-hidden hero-slider-bg animated-section">
-        <div
-            class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between z-10 relative hero-slider-content">
-            <div class="md:w-1/2 text-center md:text-left mb-10 md:mb-0">
-                <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">Research That Shapes Tomorrow</h1>
-                <p class="text-lg md:text-xl mb-8 opacity-90">Empowering Young Researchers for Academic and Scientific Advancement — Towards an Informed, Research-Oriented Society.</p>
-                <a href="index.html#objectives" class="btn-primary inline-block shadow-lg hover:shadow-xl">Get
-                    Involved</a>
+    <!-- Hero Section: Split into Video and Text with interactive background -->
+    <section id="hero" class="py-24 md:py-40 bg-white text-gray-800 animated-section">
+        <!-- Canvas for interactive background -->
+        <canvas id="hero-background-canvas"></canvas>
+
+        <!-- Content of the hero section, placed above the canvas -->
+        <div id="hero-content" class="container mx-auto px-4 flex flex-col lg:flex-row-reverse items-center justify-between gap-16">
+            <!-- Right Column: Introduction Video -->
+            <div class="w-full lg:w-1/2 flex justify-center">
+                <div class="relative w-full max-w-4xl aspect-video rounded-xl shadow-2xl overflow-hidden">
+                    <!-- YouTube video link for DR3-3n-ocZE -->
+                    <iframe
+                        class="absolute top-0 left-0 w-full h-full"
+                        src="https://www.youtube.com/embed/DR3-3n-ocZE?autoplay=1&mute=1&loop=1&playlist=DR3-3n-ocZE&rel=0"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                        title="NSSR Introduction Video"
+                    ></iframe>
+                </div>
             </div>
-            <div class="md:w-1/2 flex justify-center md:justify-end">
-                <!-- Content here, not the image -->
+
+            <!-- Left Column: Text Content -->
+            <div class="w-full lg:w-1/2 text-center lg:text-left">
+                <h1 class="text-5xl md:text-6xl font-bold mb-4 leading-tight text-gray-900">Research That Shapes Tomorrow</h1>
+                <p class="text-xl md:text-2xl mb-8 leading-relaxed text-gray-700">
+                    Empowering Young Researchers for Academic and Scientific Advancement — Towards an Informed, Research-Oriented Society.
+                </p>
+                <a href="#objectives" class="btn-primary inline-flex items-center text-base px-6 py-2 rounded-lg justify-center w-auto mx-auto lg:mx-0">
+                    Get Involved <i class="fas fa-arrow-right ml-2"></i>
+                </a>
             </div>
         </div>
-        <!-- Slider Navigation Arrows -->
-        <button id="prev-slide" class="slider-arrow left">
-            <i class="fas fa-chevron-left text-2xl"></i>
-        </button>
-        <button id="next-slide" class="slider-arrow right">
-            <i class="fas fa-chevron-right text-2xl"></i>
-        </button>
     </section>
+
+    <!-- Removed Blue Separator Section -->
+
 
     <!-- About Us Section (now includes Our Impact) -->
     <section id="about" class="py-16 md:py-24 bg-gray-50 animated-section">
@@ -591,75 +576,39 @@
     </section>
 
     <!-- Contact Us Section -->
-<section id="contact" class="py-16 md:py-24 bg-gray-50 animated-section">
-    <div class="container mx-auto px-4 text-center">
-        <h2 class="section-heading">Contact Us</h2>
-        <p class="text-lg mb-8 text-gray-600 max-w-3xl mx-auto opacity-90">
-            Get in touch with us for more information. We'd love to hear from you!
-        </p>
+    <section id="contact" class="py-16 md:py-24 bg-gray-50 animated-section">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="section-heading">Contact Us</h2>
+            <p class="text-lg mb-8 text-gray-600 max-w-3xl mx-auto opacity-90">
+                Get in touch with us for more information. We'd love to hear from you!
+            </p>
 
-        <div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
-            <form id="contact-form" class="space-y-4">
-                <div>
-                    <input type="text" id="name" name="name"
-                        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#004AAD] placeholder-gray-500 text-gray-800"
-                        placeholder="Name" required>
-                </div>
-                <div>
-                    <input type="email" id="email" name="email"
-                        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#004AAD] placeholder-gray-500 text-gray-800"
-                        placeholder="Email" required>
-                </div>
-                <div>
-                    <textarea id="message" name="message" rows="4"
-                        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#004AAD] placeholder-gray-500 text-gray-800"
-                        placeholder="Your Message" required></textarea>
-                </div>
-                <button type="submit"
-                    class="btn-green w-full px-8 py-3 rounded-lg shadow-lg bg-[#004AAD] text-white font-semibold hover:bg-blue-700 transition">
-                    Send Message
-                </button>
-                <p id="form-success" class="text-green-600 mt-4 hidden">Form submitted successfully!</p>
-            </form>
+            <div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
+                <form id="contact-form" class="space-y-4">
+                    <div>
+                        <input type="text" id="name" name="name"
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#004AAD] placeholder-gray-500 text-gray-800"
+                            placeholder="Name" required>
+                    </div>
+                    <div>
+                        <input type="email" id="email" name="email"
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#004AAD] placeholder-gray-500 text-gray-800"
+                            placeholder="Email" required>
+                    </div>
+                    <div>
+                        <textarea id="message" name="message" rows="4"
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#004AAD] placeholder-gray-500 text-gray-800"
+                            placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit"
+                        class="btn-green w-full px-8 py-3 rounded-lg shadow-lg bg-[#004AAD] text-white font-semibold hover:bg-blue-700 transition">
+                        Send Message
+                    </button>
+                    <p id="form-success" class="text-green-600 mt-4 hidden">Form submitted successfully!</p>
+                </form>
+            </div>
         </div>
-    </div>
-</section>
-
-<script>
-    const form = document.getElementById("contact-form");
-    const successMsg = document.getElementById("form-success");
-
-    form.addEventListener("submit", async function (e) {
-        e.preventDefault();
-
-        const formData = new FormData(form);
-
-        try {
-            const response = await fetch("https://formspree.io/f/mrblkopq", {
-                method: "POST",
-                headers: {
-                    'Accept': 'application/json'
-                },
-                body: formData
-            });
-
-            if (response.ok) {
-                form.reset();
-                successMsg.classList.remove("hidden");
-            } else {
-                successMsg.classList.remove("hidden");
-                successMsg.classList.remove("text-green-600");
-                successMsg.classList.add("text-red-600");
-                successMsg.innerText = "Something went wrong. Please try again.";
-            }
-        } catch (error) {
-            successMsg.classList.remove("hidden");
-            successMsg.classList.remove("text-green-600");
-            successMsg.classList.add("text-red-600");
-            successMsg.innerText = "Network error. Please check your connection.";
-        }
-    });
-</script>
+    </section>
 
 
     <!-- Footer -->
@@ -694,8 +643,8 @@
                 <div class="text-center md:text-left">
                     <h3 class="text-xl font-semibold mb-4">Quick Links</h3>
                     <ul class="space-y-2">
-                        <li><a href="index.html#about" class="hover:underline">About Us</a></li>
-                        <li><a href="index.html#objectives" class="hover:underline">Our Objectives</a></li>
+                        <li><a href="#about" class="hover:underline">About Us</a></li>
+                        <li><a href="#objectives" class="hover:underline">Our Objectives</a></li>
                         <li><a href="event.html" class="hover:underline">Events</a></li>
                         <li><a href="team.html" class="hover:underline">Our Team</a></li>
                         <li><a href="membership.html" class="hover:underline">Membership Benefits</a></li>
@@ -720,44 +669,6 @@
     <p id="newsletter-success" class="text-green-600 mt-4 hidden">Successfully subscribed to our newsletter!</p>
 </div>
 
-<script>
-    const newsletterForm = document.getElementById("newsletter-form");
-    const newsletterSuccess = document.getElementById("newsletter-success");
-
-    newsletterForm.addEventListener("submit", async function (e) {
-        e.preventDefault();
-
-        const formData = new FormData(newsletterForm);
-
-        try {
-            const response = await fetch("https://formspree.io/f/xrblkjko", {
-                method: "POST",
-                headers: {
-                    'Accept': 'application/json'
-                },
-                body: formData
-            });
-
-            if (response.ok) {
-                newsletterForm.reset();
-                newsletterSuccess.classList.remove("hidden");
-                newsletterSuccess.classList.remove("text-red-600");
-                newsletterSuccess.classList.add("text-green-600");
-                newsletterSuccess.innerText = "Successfully subscribed to our newsletter!";
-            } else {
-                newsletterSuccess.classList.remove("hidden");
-                newsletterSuccess.classList.remove("text-green-600");
-                newsletterSuccess.classList.add("text-red-600");
-                newsletterSuccess.innerText = "Subscription failed. Please try again.";
-            }
-        } catch (error) {
-            newsletterSuccess.classList.remove("hidden");
-            newsletterSuccess.classList.remove("text-green-600");
-            newsletterSuccess.classList.add("text-red-600");
-            newsletterSuccess.innerText = "Network error. Please check your connection.";
-        }
-    });
-</script>
 
             </div>
 
@@ -773,53 +684,6 @@
         mobileMenuButton.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
-
-        // JavaScript for Hero Image Slider
-        const heroSection = document.getElementById('hero');
-        const prevButton = document.getElementById('prev-slide');
-        const nextButton = document.getElementById('next-slide');
-
-        const images = [
-            'photos/events/event1.png',
-            'photos/events/event2.png',
-            'photos/events/event3.png'
-        ];
-        let currentImageIndex = 0;
-        let slideInterval; // Variable to hold the interval ID
-
-        function updateHeroImage() {
-            heroSection.style.backgroundImage = `url('${images[currentImageIndex]}')`;
-        }
-
-        function nextImage() {
-            currentImageIndex = (currentImageIndex + 1) % images.length;
-            updateHeroImage();
-            resetInterval(); // Reset interval on manual change
-        }
-
-        function prevImage() {
-            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-            updateHeroImage();
-            resetInterval(); // Reset interval on manual change
-        }
-
-        function startInterval() {
-            slideInterval = setInterval(nextImage, 5000); // Change image every 5 seconds
-        }
-
-        function resetInterval() {
-            clearInterval(slideInterval); // Clear existing interval
-            startInterval(); // Start a new one
-        }
-
-        // Event Listeners for buttons
-        prevButton.addEventListener('click', prevImage);
-        nextButton.addEventListener('click', nextImage);
-
-        // Initial setup
-        updateHeroImage(); // Set initial background image
-        startInterval(); // Start automatic sliding
-
 
         // New JavaScript for mobile dropdowns
         document.querySelectorAll('.mobile-dropdown-btn').forEach(button => {
@@ -850,6 +714,87 @@
             });
         });
 
+        // Newsletter form submission
+        const newsletterForm = document.getElementById("newsletter-form");
+        const newsletterSuccess = document.getElementById("newsletter-success");
+
+        // Check if elements exist before adding event listener
+        if (newsletterForm && newsletterSuccess) {
+            newsletterForm.addEventListener("submit", async function (e) {
+                e.preventDefault();
+                const formData = new FormData(newsletterForm);
+                try {
+                    const response = await fetch("https://formspree.io/f/xrblkjko", {
+                        method: "POST",
+                        headers: { 'Accept': 'application/json' },
+                        body: formData
+                    });
+                    if (response.ok) {
+                        newsletterForm.reset();
+                        newsletterSuccess.classList.remove("hidden");
+                        newsletterSuccess.classList.remove("text-red-600");
+                        newsletterSuccess.classList.add("text-green-600");
+                        newsletterSuccess.innerText = "Successfully subscribed to our newsletter!";
+                    } else {
+                        newsletterSuccess.classList.remove("hidden");
+                        newsletterSuccess.classList.remove("text-green-600");
+                        newsletterSuccess.classList.add("text-red-600");
+                        newsletterSuccess.innerText = "Subscription failed. Please try again.";
+                    }
+                } catch (error) {
+                    newsletterSuccess.classList.remove("hidden");
+                    newsletterSuccess.classList.remove("text-green-600");
+                    newsletterSuccess.classList.add("text-red-600");
+                    newsletterSuccess.innerText = "Network error. Please check your connection.";
+                }
+            });
+        }
+
+        // Contact form submission
+        const contactForm = document.getElementById("contact-form");
+        const contactSuccess = document.getElementById("form-success"); /* Corrected ID */
+        const contactError = document.getElementById("contact-error"); // This ID does not exist in your HTML, so it will always be null
+
+        if (contactForm && contactSuccess) { // Only add listener if both exist
+            contactForm.addEventListener("submit", async function (e) {
+                e.preventDefault();
+                const formData = new FormData(contactForm);
+                try {
+                    const response = await fetch("https://formspree.io/f/mrblkopq", { /* Updated Formspree endpoint */
+                        method: "POST",
+                        headers: { 'Accept': 'application/json' },
+                        body: formData
+                    });
+                    if (response.ok) {
+                        contactForm.reset();
+                        contactSuccess.classList.remove("hidden");
+                        if (contactError) contactError.classList.add("hidden"); // Still check for contactError
+                    } else {
+                        if (contactError) contactError.classList.remove("hidden");
+                        else {
+                            // If no specific error element, show error in success element
+                            contactSuccess.classList.remove("hidden");
+                            contactSuccess.classList.remove("text-green-600");
+                            contactSuccess.classList.add("text-red-600");
+                            contactSuccess.innerText = "There was an error sending your message. Please try again.";
+                        }
+                        contactSuccess.classList.add("hidden");
+                    }
+                } catch (error) {
+                    if (contactError) contactError.classList.remove("hidden");
+                    else {
+                        // If no specific error element, show error in success element
+                        contactSuccess.classList.remove("hidden");
+                        contactSuccess.classList.remove("text-green-600");
+                        contactSuccess.classList.add("text-red-600");
+                        contactSuccess.innerText = "Network error. Please check your connection.";
+                    }
+                    contactSuccess.classList.add("hidden");
+                }
+            });
+        }
+
+
         // Intersection Observer for animations
         const animatedSections = document.querySelectorAll('.animated-section');
 
@@ -872,6 +817,180 @@
             observer.observe(section);
         });
 
+        // --- Interactive Background Canvas Script ---
+        const canvas = document.getElementById('hero-background-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        const numParticles = 150; // Total number of particles (symbols + dots) - Increased overall for more dots
+        const symbolCount = 12; // Adjusted to be between 10-15 infinity symbols
+        const maxRadius = 2; // Max particle radius for dots
+        const symbolSize = 18; // Font size for symbols
+        const maxSpeed = 0.5; // Max particle speed
+        const connectDistance = 100; // Max distance to connect particles with a line
+        const mouseRadius = 100; // Radius for mouse interaction
+        const mouseForceMultiplier = 12; // Further increased for super higher sensitivity
+        let mouse = { x: null, y: null };
+
+        // Unicode symbols for research-related items (updated to only infinity)
+        const researchSymbols = ['∞'];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = document.getElementById('hero').offsetHeight; // Match hero section height
+            initParticles(); // Re-initialize particles on resize
+        }
+
+        class Particle {
+            constructor(x, y, radius, color, velocityX, velocityY, type = 'dot', symbol = null) {
+                this.x = x;
+                this.y = y;
+                this.radius = radius;
+                this.color = color;
+                this.velocityX = velocityX;
+                this.velocityY = velocityY;
+                this.type = type;
+                this.symbol = symbol;
+            }
+
+            draw() {
+                if (this.type === 'dot') {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                } else {
+                    ctx.font = `${symbolSize}px 'Oswald', sans-serif`; // Use Oswald font for symbols
+                    ctx.fillStyle = this.color;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(this.symbol, this.x, this.y);
+                }
+            }
+
+            update() {
+                // Update position
+                this.x += this.velocityX;
+                this.y += this.velocityY;
+
+                // Loop particles around the screen
+                if (this.x - this.radius > canvas.width) {
+                    this.x = 0 - this.radius;
+                } else if (this.x + this.radius < 0) {
+                    this.x = canvas.width + this.radius;
+                }
+                if (this.y - this.radius > canvas.height) {
+                    this.y = 0 - this.radius;
+                } else if (this.y + this.radius < 0) {
+                    this.y = canvas.height + this.radius;
+                }
+
+                // Mouse interaction
+                let distanceX = mouse.x - this.x;
+                let distanceY = mouse.y - this.y;
+                let distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+
+                if (distance < mouseRadius && mouse.x !== null) {
+                    let forceDirectionX = distanceX / distance;
+                    let forceDirectionY = distanceY / distance;
+                    let force = (mouseRadius - distance) / mouseRadius;
+                    let directionX = forceDirectionX * force * mouseForceMultiplier; // Use multiplier here
+                    let directionY = forceDirectionY * force * mouseForceMultiplier; // Use multiplier here
+
+                    this.x -= directionX;
+                    this.y -= directionY;
+                }
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const purpleColor = 'rgba(102, 51, 153, 0.3)'; // Purple with 30% opacity
+
+            // Create symbols first to ensure exactly `symbolCount` symbols
+            for (let i = 0; i < symbolCount; i++) {
+                let x = Math.random() * canvas.width;
+                let y = Math.random() * canvas.height;
+                let velocityX = (Math.random() - 0.5) * maxSpeed * 2;
+                let velocityY = (Math.random() - 0.5) * maxSpeed * 2;
+                // Since researchSymbols only contains '∞', it will always pick infinity
+                const randomSymbol = researchSymbols[Math.floor(Math.random() * researchSymbols.length)];
+                particles.push(new Particle(x, y, symbolSize / 2, purpleColor, velocityX, velocityY, 'symbol', randomSymbol));
+            }
+
+            // Create remaining particles as dots
+            for (let i = 0; i < numParticles - symbolCount; i++) {
+                let radius = Math.random() * maxRadius + 1; // Radius between 1 and maxRadius+1
+                let x = Math.random() * (canvas.width - radius * 2) + radius;
+                let y = Math.random() * (canvas.height - radius * 2) + radius;
+                let velocityX = (Math.random() - 0.5) * maxSpeed * 2;
+                let velocityY = (Math.random() - 0.5) * maxSpeed * 2;
+                particles.push(new Particle(x, y, radius, purpleColor, velocityX, velocityY, 'dot'));
+            }
+        }
+
+        function connectParticles() {
+            for (let a = 0; a < particles.length; a++) {
+                for (let b = a; b < particles.length; b++) {
+                    let distance = Math.sqrt(
+                        (particles[a].x - particles[b].x) ** 2 +
+                        (particles[a].y - particles[b].y) ** 2
+                    );
+
+                    if (distance < connectDistance) {
+                        // Fading opacity for purple lines
+                        ctx.strokeStyle = `rgba(102, 51, 153, ${0.3 - (distance / connectDistance) * 0.2})`; // Purple with fading opacity
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[a].x, particles[a].y);
+                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+            }
+            connectParticles();
+        }
+
+        // Event Listeners
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            // Re-center mouse position if it was active
+            if (mouse.x !== null) {
+                // Adjust mouse position relative to new canvas size
+                const heroRect = document.getElementById('hero').getBoundingClientRect();
+                mouse.x = event.clientX - heroRect.left;
+                mouse.y = event.clientY - heroRect.top;
+            }
+        });
+
+        // Update mouse position on mousemove within the hero section
+        document.getElementById('hero').addEventListener('mousemove', (event) => {
+            const heroRect = document.getElementById('hero').getBoundingClientRect();
+            mouse.x = event.clientX - heroRect.left;
+            mouse.y = event.clientY - heroRect.top;
+        });
+
+        // Reset mouse position when mouse leaves the hero section
+        document.getElementById('hero').addEventListener('mouseleave', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        // Initialize on load
+        window.onload = () => {
+            resizeCanvas();
+            animate();
+        };
+        // --- End Interactive Background Canvas Script ---
     </script>
 </body>
 
