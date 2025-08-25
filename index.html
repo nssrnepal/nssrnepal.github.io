@@ -18,7 +18,7 @@
         .dropdown-menu a,
         .mobile-dropdown-btn,
         .mobile-dropdown-content a,
-        .navbar-logo-text { /* Applied Oswald to all relevant elements */
+        .navbar-logo-text {
             font-family: 'Oswald', sans-serif;
             background-color: #EFF6FF; /* Unified body background color */
         }
@@ -89,8 +89,7 @@
             padding: 0.5rem 1rem;
             border-radius: 0.5rem;
             transition: background-color 0.3s ease, color 0.3s ease;
-            /* Ensure no default background on the links themselves */
-            background-color: transparent; 
+            background-color: transparent;
         }
 
         .nav-link:hover {
@@ -102,8 +101,7 @@
         .dropdown-menu {
             display: none;
             position: absolute;
-            /* Changed to match body background color */
-            background-color: #EFF6FF;
+            background-color: #EFF6FF; /* Changed to match body background color */
             min-width: 160px;
             box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
             z-index: 1000;
@@ -157,8 +155,7 @@
             padding-left: 1.5rem; /* Indent sub-items */
             padding-top: 0.25rem;
             padding-bottom: 0.25rem;
-            /* Ensure no default white background here, matches parent */
-            background-color: transparent; 
+            background-color: transparent;
         }
 
         .mobile-dropdown-content a {
@@ -321,6 +318,7 @@
             overflow: hidden;
             border-radius: 1rem; /* Match card border-radius */
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Match card shadow */
+            margin-top: 2rem; /* Added margin for spacing below text on mobile */
         }
 
         .about-us-video-container iframe {
@@ -331,13 +329,20 @@
             height: 100%;
             border: 0;
         }
+
+        /* Ensure video takes full width on smaller screens */
+        @media (max-width: 767px) {
+            .about-us-video-wrapper {
+                width: 100%; /* Ensure the video wrapper takes full width on mobile */
+            }
+        }
     </style>
 </head>
 
 <body class="text-gray-800">
 
     <!-- Navigation Bar -->
-    <nav class="bg-[#EFF6FF] shadow-md py-3 px-4 sticky top-0 z-50"> <!-- Changed bg-white to match body background -->
+    <nav class="bg-[#EFF6FF] shadow-md py-3 px-4 sticky top-0 z-50">
         <div class="w-full flex justify-between items-center px-0">
             <a href="index.html" class="rounded-lg p-2 flex items-center space-x-2 ml-0">
                 <!-- Optimized logo size for responsiveness -->
@@ -402,7 +407,7 @@
             </button>
         </div>
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="xl:hidden hidden bg-[#EFF6FF] mt-2 rounded-lg shadow-lg py-2"> <!-- Changed bg-white to match body background -->
+        <div id="mobile-menu" class="xl:hidden hidden bg-[#EFF6FF] mt-2 rounded-lg shadow-lg py-2">
             <a href="index.html#hero" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md">Home</a>
 
             <!-- About Us Dropdown for mobile -->
@@ -466,7 +471,7 @@
     <section id="about" class="py-16 md:py-24 bg-gray-50 animated-section">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row items-center gap-12 mb-16">
-                <div class="md:w-1/2 text-lg leading-relaxed text-gray-700">
+                <div class="md:w-1/2 text-lg leading-relaxed text-gray-700 w-full"> <!-- Ensured text takes full width on mobile -->
                     <p class="mb-6 text-justify">
                         The Nepalese Society of Student Researchers (NSSR) is a nonprofit, youth-led membership
                         organization established under the Companies Act, 2063 of Nepal. Dedicated to fostering a
@@ -488,11 +493,11 @@
                         engage with scientific knowledge, and make informed decisions in their everyday lives.
                     </p>
                 </div>
-                <div class="md:w-1/2 flex justify-center">
-                    <!-- Video instead of the group photo -->
+                <!-- Video container now always takes full width on smaller screens and has margin below text -->
+                <div class="md:w-1/2 flex justify-center w-full about-us-video-wrapper"> 
                     <div class="about-us-video-container">
                         <iframe
-                            src="https://www.youtube.com/embed/KL6x4KZQjgo?autoplay=0&loop=1&controls=1&modestbranding=1&rel=0&showinfo=0"
+                            src="https://www.youtube.com/embed/KL6x4KZQjgo?autoplay=0&loop=1&controls=1&modestbranding=1&rel=0&showinfo=0&playlist=KL6x4KZQjgo"
                             frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen
