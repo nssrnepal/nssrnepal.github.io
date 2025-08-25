@@ -12,11 +12,26 @@
     <!-- Google Fonts - Oswald (similar to Norwester) -->
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
+        /* Ensuring 'Oswald' font is used throughout the body and navigation */
+        body,
+        .nav-link,
+        .dropdown-menu a,
+        .mobile-dropdown-btn,
+        .mobile-dropdown-content a,
+        .navbar-logo-text { /* Applied Oswald to all relevant elements */
             font-family: 'Oswald', sans-serif;
-            /* Changed font to Oswald */
-            background-color: #EFF6FF; /* Updated to #EFF6FF */
-            /* Light gray background */
+            background-color: #EFF6FF; /* Unified body background color */
+        }
+
+        /* Added scroll-margin-top to ensure content isn't cut off by fixed header when jumping to anchors */
+        #about {
+            scroll-margin-top: 6rem; /* Adjust this value based on your fixed header's height */
+        }
+        #objectives {
+            scroll-margin-top: 6rem; /* Adjust for objectives section */
+        }
+        #contact {
+            scroll-margin-top: 6rem; /* Adjust for contact section */
         }
 
         .section-heading {
@@ -43,8 +58,7 @@
         }
 
         .btn-primary {
-            background-color: #004AAD;
-            /* Primary Color: Deep Blue */
+            background-color: #004AAD; /* Primary Color: Deep Blue */
             color: white;
             padding: 0.75rem 1.5rem;
             border-radius: 0.75rem;
@@ -53,14 +67,11 @@
         }
 
         .btn-primary:hover {
-            background-color: #003a8d;
-            /* Darker shade of primary color */
+            background-color: #003a8d; /* Darker shade of primary color */
         }
 
         .btn-green {
-            /* New style for the green button */
-            background-color: #22c55e;
-            /* Green-600 */
+            background-color: #22c55e; /* Green-600 */
             color: white;
             padding: 0.75rem 1.5rem;
             border-radius: 0.75rem;
@@ -69,46 +80,42 @@
         }
 
         .btn-green:hover {
-            background-color: #16a34a;
-            /* Green-700 */
+            background-color: #16a34a; /* Green-700 */
         }
 
         .nav-link {
-            color: #4a5568;
-            /* Gray text for nav links */
+            color: #4a5568; /* Gray text for nav links */
             font-weight: 500;
             padding: 0.5rem 1rem;
             border-radius: 0.5rem;
             transition: background-color 0.3s ease, color 0.3s ease;
+            /* Ensure no default background on the links themselves */
+            background-color: transparent; 
         }
 
         .nav-link:hover {
-            background-color: #edf2f7;
-            /* Light gray background on hover */
-            color: #2d3748;
-            /* Darker gray text on hover */
+            background-color: #edf2f7; /* Light gray background on hover */
+            color: #2d3748; /* Darker gray text on hover */
         }
 
         /* Desktop Dropdown specific styles */
         .dropdown-menu {
             display: none;
             position: absolute;
-            background-color: #ffffff;
+            /* Changed to match body background color */
+            background-color: #EFF6FF;
             min-width: 160px;
             box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
             z-index: 1000;
-            border-radius: 0.75rem;
-            /* Rounded corners for dropdown */
+            border-radius: 0.75rem; /* Rounded corners for dropdown */
             padding: 0.5rem 0;
-            top: 100%;
-            /* Position right below the parent */
+            top: 100%; /* Position right below the parent */
             left: 0;
         }
 
         .dropdown-menu a {
             color: #4a5568;
-            padding: 0.75rem 1.5rem;
-            /* Adjusted padding for better click area */
+            padding: 0.75rem 1.5rem; /* Adjusted padding for better click area */
             text-decoration: none;
             display: block;
             text-align: left;
@@ -134,8 +141,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0.5rem 1rem;
-            /* Adjust padding to match nav-link */
+            padding: 0.5rem 1rem; /* Adjust padding to match nav-link */
             color: #4a5568;
             font-weight: 500;
             border-radius: 0.5rem;
@@ -146,12 +152,13 @@
             background-color: #edf2f7;
             color: #2d3748;
         }
-
+        
         .mobile-dropdown-content {
-            padding-left: 1.5rem;
-            /* Indent sub-items */
+            padding-left: 1.5rem; /* Indent sub-items */
             padding-top: 0.25rem;
             padding-bottom: 0.25rem;
+            /* Ensure no default white background here, matches parent */
+            background-color: transparent; 
         }
 
         .mobile-dropdown-content a {
@@ -164,32 +171,25 @@
         }
 
         .mobile-dropdown-content a:hover {
-            background-color: #e2e8f0;
-            /* Slightly darker gray for sub-item hover */
+            background-color: #e2e8f0; /* Slightly darker gray for sub-item hover */
             color: #2d3748;
         }
 
         /* Team Member Card Specific Styles (for index.html as well) */
         .team-member-card .image-social-container {
             position: relative;
-            width: 9rem;
-            /* Match w-36 (144px) */
-            height: 9rem;
-            /* Match h-36 (144px) */
-            margin-bottom: 1rem;
-            /* Adjust margin as needed */
-            overflow: hidden;
-            /* Ensure overlay respects border-radius */
-            border-radius: 9999px;
-            /* Full rounded for circle */
+            width: 9rem; /* Match w-36 (144px) */
+            height: 9rem; /* Match h-36 (144px) */
+            margin-bottom: 1rem; /* Adjust margin as needed */
+            overflow: hidden; /* Ensure overlay respects border-radius */
+            border-radius: 9999px; /* Full rounded for circle */
         }
 
         .team-member-card .image-social-container img {
             display: block;
             width: 100%;
             height: 100%;
-            border-radius: 9999px;
-            /* Full rounded for circle */
+            border-radius: 9999px; /* Full rounded for circle */
             object-fit: cover;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
@@ -199,56 +199,43 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
-            /* Gradient overlay */
-            border-bottom-left-radius: 9rem;
-            /* Match border-radius of image */
-            border-bottom-right-radius: 9rem;
-            /* Match border-radius of image */
-            padding-top: 2rem;
-            /* Give space for gradient */
-            opacity: 0;
-            /* Hidden by default */
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)); /* Gradient overlay */
+            border-bottom-left-radius: 9rem; /* Match border-radius of image */
+            border-bottom-right-radius: 9rem; /* Match border-radius of image */
+            padding-top: 2rem; /* Give space for gradient */
+            opacity: 0; /* Hidden by default */
             transition: opacity 0.3s ease;
             display: flex;
             justify-content: center;
             align-items: center;
-            pointer-events: none;
-            /* Allow clicks to pass through when hidden */
+            pointer-events: none; /* Allow clicks to pass through when hidden */
         }
 
         .team-member-card:hover .image-social-container .social-links-overlay {
-            opacity: 1;
-            /* Show on hover */
-            pointer-events: auto;
-            /* Enable clicks when visible */
+            opacity: 1; /* Show on hover */
+            pointer-events: auto; /* Enable clicks when visible */
         }
 
         .team-member-card .social-links-overlay a {
-            color: white;
-            /* White icons on dark overlay */
+            color: white; /* White icons on dark overlay */
             transition: color 0.3s ease;
         }
 
         .team-member-card .social-links-overlay a:hover {
-            color: #004AAD;
-            /* Primary color on hover for icons */
+            color: #004AAD; /* Primary color on hover for icons */
         }
 
         /* New styles for hover effects on objective and contact cards */
         .objective-card:hover {
-            background-color: #004AAD;
-            /* Blue background on hover */
-            color: white;
-            /* White text on hover */
+            background-color: #004AAD; /* Blue background on hover */
+            color: white; /* White text on hover */
             transform: translateY(-5px);
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
         }
 
         .objective-card:hover h3,
         .objective-card:hover p {
-            color: white;
-            /* Ensure text inside also turns white */
+            color: white; /* Ensure text inside also turns white */
         }
 
         /* Animations for sections */
@@ -263,32 +250,86 @@
             transform: translateY(0);
         }
 
-        /* Custom styles for the hero canvas background */
+        /* Hero section specific styling for interactive background */
         #hero {
             position: relative;
-            /* Needed for absolute positioning of canvas */
+            height: 100vh;
+            background-color: #1a202c; /* Dark background for particles */
+            display: flex;
+            justify-content: center;
+            align-items: center;
             overflow: hidden;
-            /* Hide particles outside the section */
-            background-color: #EFF6FF; /* Ensure hero section uses the new soft blue */
+            color: white;
+            text-align: center;
+            flex-direction: column; /* Stack vertically for content and canvas if needed */
         }
 
-        #hero-background-canvas {
+        #hero-canvas {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 1;
-            /* Place behind content */
-            pointer-events: none;
-            /* Allow clicks to pass through to content */
+            z-index: 0;
         }
 
         #hero-content {
             position: relative;
-            /* Ensure content is above canvas */
-            z-index: 2;
-            /* Place above canvas */
+            z-index: 10;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            max-width: 900px;
+            margin: auto;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7); /* Stronger text shadow for readability */
+        }
+
+        #hero-content h1 {
+            font-size: 5xl; /* Tailwind equivalent of 3rem */
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        #hero-content p {
+            font-size: 2xl; /* Tailwind equivalent of 1.5rem */
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 768px) {
+            #hero-content h1 {
+                font-size: 3xl; /* Smaller on mobile */
+            }
+
+            #hero-content p {
+                font-size: xl; /* Smaller on mobile */
+            }
+
+            #hero-content {
+                padding: 1.5rem;
+            }
+        }
+
+        /* About Us video container styles */
+        .about-us-video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 1rem; /* Match card border-radius */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Match card shadow */
+        }
+
+        .about-us-video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
         }
     </style>
 </head>
@@ -296,17 +337,17 @@
 <body class="text-gray-800">
 
     <!-- Navigation Bar -->
-    <nav class="bg-white shadow-md py-3 px-4 sticky top-0 z-50">
+    <nav class="bg-[#EFF6FF] shadow-md py-3 px-4 sticky top-0 z-50"> <!-- Changed bg-white to match body background -->
         <div class="w-full flex justify-between items-center px-0">
             <a href="index.html" class="rounded-lg p-2 flex items-center space-x-2 ml-0">
                 <!-- Optimized logo size for responsiveness -->
                 <img src="photos/bluelogonobg.png" alt="NSSR Logo" class="h-12 sm:h-16">
                 <!-- Adjusted logo text size for better responsiveness -->
-                <span class="text-base sm:text-lg md:text-xl font-semibold text-[#004AAD] hidden sm:block">
+                <span class="navbar-logo-text text-base sm:text-lg md:text-xl font-semibold text-[#004AAD] hidden sm:block">
                     Nepalese Society of Student Researchers
                 </span>
             </a>
-            <!-- Changed lg:flex to xl:flex for desktop menu visibility -->
+            <!-- Desktop menu - uses xl:flex to show on extra-large screens and up -->
             <div class="hidden xl:flex items-center space-x-2 lg:space-x-4 xl:space-x-6">
                 <!-- Adjusted nav-link text size for responsiveness -->
                 <a href="index.html" class="nav-link text-lg md:text-xl">Home</a>
@@ -314,16 +355,14 @@
                 <!-- About Us Dropdown -->
                 <div class="relative group dropdown">
                     <a href="index.html#about" class="nav-link inline-flex items-center text-lg md:text-xl">
-                        About <i class="fas fa-chevron-down text-base ml-2"></i> <!-- Changed "About Us" to "About" -->
+                        About <i class="fas fa-chevron-down text-base ml-2"></i>
                     </a>
                     <div class="dropdown-menu">
                         <!-- Adjusted dropdown menu text size -->
                         <a href="index.html#about" class="text-base">About NSSR</a>
-                        <!-- Removed Objectives link -->
-                        <a href="team.html" class="text-base">Who's Who</a> <!-- Changed "Our Team" to "Who's Who" -->
+                        <a href="team.html" class="text-base">Who's Who</a>
                     </div>
                 </div>
-
 
                 <!-- Events Dropdown -->
                 <div class="relative group dropdown">
@@ -357,24 +396,23 @@
 
                 <!-- Removed Login Button -->
             </div>
-            <!-- Mobile Menu Button - Changed lg:hidden to xl:hidden -->
+            <!-- Mobile Menu Button - hidden on xl screens and up -->
             <button id="mobile-menu-button" class="xl:hidden text-gray-600 focus:outline-none">
                 <i class="fas fa-bars text-2xl"></i>
             </button>
         </div>
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="xl:hidden hidden bg-white mt-2 rounded-lg shadow-lg py-2">
+        <div id="mobile-menu" class="xl:hidden hidden bg-[#EFF6FF] mt-2 rounded-lg shadow-lg py-2"> <!-- Changed bg-white to match body background -->
             <a href="index.html#hero" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md">Home</a>
 
             <!-- About Us Dropdown for mobile -->
             <div class="mobile-dropdown">
                 <button class="mobile-dropdown-btn flex items-center justify-between w-full">
-                    About <i class="fas fa-chevron-down text-xs ml-2"></i> <!-- Changed "About Us" to "About" -->
+                    About <i class="fas fa-chevron-down text-xs ml-2"></i>
                 </button>
                 <div class="mobile-dropdown-content hidden">
                     <a href="index.html#about">About NSSR</a>
-                    <!-- Removed Objectives link -->
-                    <a href="team.html">Who's Who</a> <!-- Changed "Our Team" to "Who's Who" -->
+                    <a href="team.html">Who's Who</a>
                 </div>
             </div>
 
@@ -408,43 +446,21 @@
         </div>
     </nav>
 
-    <!-- Hero Section: Split into Video and Text with interactive background -->
-    <section id="hero" class="py-24 md:py-40 bg-white text-gray-800 animated-section">
-        <!-- Canvas for interactive background -->
-        <canvas id="hero-background-canvas"></canvas>
-
-        <!-- Content of the hero section, placed above the canvas -->
-        <div id="hero-content" class="container mx-auto px-4 flex flex-col lg:flex-row-reverse items-center justify-between gap-16">
-            <!-- Right Column: Introduction Video -->
-            <div class="w-full lg:w-1/2 flex justify-center">
-                <div class="relative w-full max-w-4xl aspect-video rounded-xl shadow-2xl overflow-hidden">
-                    <!-- YouTube video link for DR3-3n-ocZE -->
-                    <iframe
-                        class="absolute top-0 left-0 w-full h-full"
-                        src="https://www.youtube.com/embed/DR3-3n-ocZE?autoplay=1&mute=1&loop=1&playlist=DR3-3n-ocZE&rel=0"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen
-                        title="NSSR Introduction Video"
-                    ></iframe>
-                </div>
-            </div>
-
-            <!-- Left Column: Text Content -->
-            <div class="w-full lg:w-1/2 text-center lg:text-left">
-                <h1 class="text-5xl md:text-6xl font-bold mb-4 leading-tight text-gray-900">Research That Shapes Tomorrow</h1>
-                <p class="text-xl md:text-2xl mb-8 leading-relaxed text-gray-700">
-                    Empowering Young Researchers for Academic and Scientific Advancement — Towards an Informed, Research-Oriented Society.
-                </p>
-                <a href="#objectives" class="btn-primary inline-flex items-center text-base px-6 py-2 rounded-lg justify-center w-auto mx-auto lg:mx-0">
-                    Get Involved <i class="fas fa-arrow-right ml-2"></i>
-                </a>
-            </div>
+    <!-- Hero Section: Interactive Particle Background -->
+    <section id="hero" class="animated-section">
+        <canvas id="hero-canvas"></canvas>
+        <div id="hero-content" class="container mx-auto">
+            <h1 class="text-5xl md:text-6xl font-bold mb-4 leading-tight text-white">Research That Shapes Tomorrow</h1>
+            <p class="text-xl md:text-2xl mb-8 leading-relaxed text-white">
+                Empowering Young Researchers for Academic and Scientific Advancement — Towards an Informed,
+                Research-Oriented Society.
+            </p>
+            <a href="#objectives"
+                class="btn-primary inline-flex text-base px-6 py-2 rounded-lg justify-center w-auto mx-auto">
+                Get Involved
+            </a>
         </div>
     </section>
-
-    <!-- Removed Blue Separator Section -->
-
 
     <!-- About Us Section (now includes Our Impact) -->
     <section id="about" class="py-16 md:py-24 bg-gray-50 animated-section">
@@ -452,40 +468,59 @@
             <div class="flex flex-col md:flex-row items-center gap-12 mb-16">
                 <div class="md:w-1/2 text-lg leading-relaxed text-gray-700">
                     <p class="mb-6 text-justify">
-                        The Nepalese Society of Student Researchers (NSSR) is a nonprofit, youth-led membership organization established under the Companies Act, 2063 of Nepal. Dedicated to fostering a vibrant research culture in the country, NSSR seeks to nurture aspiring researchers and create a conducive environment for academic inquiry and innovation.
+                        The Nepalese Society of Student Researchers (NSSR) is a nonprofit, youth-led membership
+                        organization established under the Companies Act, 2063 of Nepal. Dedicated to fostering a
+                        vibrant research culture in the country, NSSR seeks to nurture aspiring researchers and create a
+                        conducive environment for academic inquiry and innovation.
                     </p>
                     <p class="mb-6 text-justify">
-                        Our mission is to bridge the gap between student researchers and established academics, providing a collaborative platform that promotes dialogue, mentorship, and scholarly engagement. Through this initiative, NSSR aspires to enhance academic excellence and make meaningful contributions to Nepal’s scientific and intellectual advancement. At the heart of our efforts is a commitment to empowering the next generation of scientists with the tools, knowledge, and support necessary to thrive in both national and global research landscapes.
+                        Our mission is to bridge the gap between student researchers and established academics,
+                        providing a collaborative platform that promotes dialogue, mentorship, and scholarly engagement.
+                        Through this initiative, NSSR aspires to enhance academic excellence and make meaningful
+                        contributions to Nepal’s scientific and intellectual advancement. At the heart of our efforts is
+                        a commitment to empowering the next generation of scientists with the tools, knowledge, and
+                        support necessary to thrive in both national and global research landscapes.
                     </p>
                     <p class="mb-6 text-justify">
-                        NSSR further recognizes that the pursuit of scientific understanding should not be confined to academia alone. To this end, we are actively engaged in promoting scientific literacy across all strata of Nepalese society—empowering individuals from diverse backgrounds to think critically, engage with scientific knowledge, and make informed decisions in their everyday lives.
+                        NSSR further recognizes that the pursuit of scientific understanding should not be confined to
+                        academia alone. To this end, we are actively engaged in promoting scientific literacy across all
+                        strata of Nepalese society—empowering individuals from diverse backgrounds to think critically,
+                        engage with scientific knowledge, and make informed decisions in their everyday lives.
                     </p>
                 </div>
                 <div class="md:w-1/2 flex justify-center">
-                    <!-- Placeholder for About Us Image -->
-                    <img src="photos/team.jpg" alt="Group of NSSR members collaborating"
-                        class="rounded-xl shadow-lg w-full h-auto object-cover"">
+                    <!-- Video instead of the group photo -->
+                    <div class="about-us-video-container">
+                        <iframe
+                            src="https://www.youtube.com/embed/KL6x4KZQjgo?autoplay=0&loop=0&controls=1&modestbranding=1&rel=0&showinfo=0"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                            title="NSSR Introduction Video"
+                        ></iframe>
+                        
+                    </div>
                 </div>
             </div>
 
             <!-- Our Impact metrics - now integrated directly under About Us description -->
             <div class=" pt-8 border-t border-gray-200">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                        <div class="card p-6">
-                            <div class="text-[#004AAD] text-5xl font-bold mb-2">150+</div>
-                            <p class="text-gray-700">Reached to students and research enthusiasts</p>
-                        </div>
-                        <div class="card p-6">
-                            <div class="text-[#004AAD] text-5xl font-bold mb-2">5+</div>
-                            <p class="text-gray-700">Collaborations with institutions and organizations</p>
-                        </div>
-                        <div class="card p-6">
-                            <div class="text-[#004AAD] text-5xl font-bold mb-2">4+</div>
-                            <p class="text-gray-700">Sessions Conducted</p>
-                        </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="card p-6">
+                        <div class="text-[#004AAD] text-5xl font-bold mb-2">150+</div>
+                        <p class="text-gray-700">Reached to students and research enthusiasts</p>
+                    </div>
+                    <div class="card p-6">
+                        <div class="text-[#004AAD] text-5xl font-bold mb-2">5+</div>
+                        <p class="text-gray-700">Collaborations with institutions and organizations</p>
+                    </div>
+                    <div class="card p-6">
+                        <div class="text-[#004AAD] text-5xl font-bold mb-2">4+</div>
+                        <p class="text-gray-700">Sessions Conducted</p>
                     </div>
                 </div>
             </div>
+        </div>
     </section>
 
     <!-- Mission, Values, and Ethics Section -->
@@ -493,7 +528,8 @@
         <div class="container mx-auto px-4">
             <h2 class="section-heading">Mission, Values, and Ethics</h2>
             <p class="text-center text-lg text-gray-600 mb-12 max-w-3xl mx-auto">
-                NSSR is committed to advancing scientific inquiry and literacy through a clear mission, strong core values, and unwavering ethical commitments.
+                NSSR is committed to advancing scientific inquiry and literacy through a clear mission, strong core
+                values, and unwavering ethical commitments.
             </p>
 
             <h3 class="text-2xl font-semibold text-[#004AAD] text-center mb-8">NSSR Seeks To:</h3>
@@ -502,15 +538,18 @@
                 <div class="card flex flex-col items-center text-center p-6 border-2 border-[#004AAD] objective-card">
                     <h3 class="text-xl font-semibold text-[#004AAD] mb-3">To Promote Research Culture</h3>
                     <p class="text-gray-600">
-                        Foster an environment that encourages academic inquiry, critical thinking, and innovation among students and early-career researchers.
+                        Foster an environment that encourages academic inquiry, critical thinking, and innovation among
+                        students and early-career researchers.
                     </p>
                 </div>
 
                 <!-- Objective 2 Card: To Promote Academic Integration and Mentorship -->
                 <div class="card flex flex-col items-center text-center p-6 border-2 border-[#004AAD] objective-card">
-                    <h3 class="text-xl font-semibold text-[#004AAD] mb-3">To Promote Academic Integration and Mentorship</h3>
+                    <h3 class="text-xl font-semibold text-[#004AAD] mb-3">To Promote Academic Integration and Mentorship
+                    </h3>
                     <p class="text-gray-600">
-                        Facilitate meaningful interaction between students, researchers, and established scholars, promoting mentorship and collaborative research.
+                        Facilitate meaningful interaction between students, researchers, and established scholars,
+                        promoting mentorship and collaborative research.
                     </p>
                 </div>
 
@@ -518,13 +557,15 @@
                 <div class="card flex flex-col items-center text-center p-6 border-2 border-[#004AAD] objective-card">
                     <h3 class="text-xl font-semibold text-[#004AAD] mb-3">To Advance Scientific Literacy</h3>
                     <p class="text-gray-600">
-                        Promote public understanding of science and the scientific method across all sectors of society, ensuring that science serves as a tool for informed decision-making.
+                        Promote public understanding of science and the scientific method across all sectors of society,
+                        ensuring that science serves as a tool for informed decision-making.
                     </p>
                 </div>
 
                 <!-- New Objective Card: To Collaborate Nationally and Internationally -->
                 <div class="card flex flex-col items-center text-center p-6 border-2 border-[#004AAD] objective-card">
-                    <h3 class="text-xl font-semibold text-[#004AAD] mb-3">To Collaborate Nationally and Internationally</h3>
+                    <h3 class="text-xl font-semibold text-[#004AAD] mb-3">To Collaborate Nationally and Internationally
+                    </h3>
                     <p class="text-gray-600">
                         Work in partnership with national and international organizations.
                     </p>
@@ -534,7 +575,8 @@
                 <div class="card flex flex-col items-center text-center p-6 border-2 border-[#004AAD] objective-card">
                     <h3 class="text-xl font-semibold text-[#004AAD] mb-3">To Promote Documentation and Publication</h3>
                     <p class="text-gray-600">
-                        Encourage the collection, creation, editing, and distribution of research materials, scientific literature, and academic publications.
+                        Encourage the collection, creation, editing, and distribution of research materials, scientific
+                        literature, and academic publications.
                     </p>
                 </div>
             </div>
@@ -545,7 +587,8 @@
                 <div class="card flex flex-col items-center text-center p-6 border-2 border-[#004AAD] objective-card">
                     <h3 class="text-xl font-semibold text-[#004AAD] mb-3">Inclusivity and Accessibility</h3>
                     <p class="text-gray-600">
-                        Advocate for equal access to education and scientific opportunities for all, regardless of socio-economic background.
+                        Advocate for equal access to education and scientific opportunities for all, regardless of
+                        socio-economic background.
                     </p>
                 </div>
 
@@ -561,7 +604,8 @@
                 <div class="card flex flex-col items-center text-center p-6 border-2 border-[#004AAD] objective-card">
                     <h3 class="text-xl font-semibold text-[#004AAD] mb-3">Collaboration</h3>
                     <p class="text-gray-600">
-                        Engage in partnerships with national and international institutions within the framework of governmental policies and global development goals.
+                        Engage in partnerships with national and international institutions within the framework of
+                        governmental policies and global development goals.
                     </p>
                 </div>
             </div>
@@ -569,7 +613,9 @@
             <h3 class="text-2xl font-semibold text-[#004AAD] text-center mb-8">Ethical Commitments</h3>
             <div class="card p-6 border-2 border-[#004AAD] text-center">
                 <p class="text-gray-600 text-justify">
-                    NSSR conducts all activities in adherence to Nepal’s legal framework and global ethical standards. It maintains transparency, accountability, and a strong sense of civic responsibility in every aspect of its operation.
+                    NSSR conducts all activities in adherence to Nepal’s legal framework and global ethical standards.
+                    It maintains transparency, accountability, and a strong sense of civic responsibility in every
+                    aspect of its operation.
                 </p>
             </div>
         </div>
@@ -654,20 +700,22 @@
                 </div>
 
                 <!-- Column 4: Our Newsletter -->
-<div class="text-center md:text-left md:col-span-2 lg:col-span-1">
-    <h3 class="text-xl font-semibold mb-4">Our Newsletter</h3>
-    <p class="mb-4">Stay up-to-date with the latest news and insights delivered straight to your inbox.</p>
-    <form id="newsletter-form" class="flex flex-col sm:flex-row gap-2">
-        <input type="email" name="_replyto" placeholder="Your Email"
-            class="p-2 rounded-lg text-gray-800 flex-grow w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-[#004AAD]"
-            required>
-        <button type="submit"
-            class="btn-primary px-4 py-2 rounded-lg w-full sm:w-auto bg-[#004AAD] text-white font-semibold hover:bg-blue-700 transition">
-            Subscribe
-        </button>
-    </form>
-    <p id="newsletter-success" class="text-green-600 mt-4 hidden">Successfully subscribed to our newsletter!</p>
-</div>
+                <div class="text-center md:text-left md:col-span-2 lg:col-span-1">
+                    <h3 class="text-xl font-semibold mb-4">Our Newsletter</h3>
+                    <p class="mb-4">Stay up-to-date with the latest news and insights delivered straight to your inbox.
+                    </p>
+                    <form id="newsletter-form" class="flex flex-col sm:flex-row gap-2">
+                        <input type="email" name="_replyto" placeholder="Your Email"
+                            class="p-2 rounded-lg text-gray-800 flex-grow w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-[#004AAD]"
+                            required>
+                        <button type="submit"
+                            class="btn-primary px-4 py-2 rounded-lg w-full sm:w-auto bg-[#004AAD] text-white font-semibold hover:bg-blue-700 transition">
+                            Subscribe
+                        </button>
+                    </form>
+                    <p id="newsletter-success" class="text-green-600 mt-4 hidden">Successfully subscribed to our
+                        newsletter!</p>
+                </div>
 
 
             </div>
@@ -817,180 +865,141 @@
             observer.observe(section);
         });
 
-        // --- Interactive Background Canvas Script ---
-        const canvas = document.getElementById('hero-background-canvas');
+        // --- Interactive Canvas Background Script ---
+        const canvas = document.getElementById('hero-canvas');
+        const heroSection = document.getElementById('hero'); // Get the hero section
         const ctx = canvas.getContext('2d');
         let particles = [];
-        const numParticles = 150; // Total number of particles (symbols + dots) - Increased overall for more dots
-        const symbolCount = 12; // Adjusted to be between 10-15 infinity symbols
-        const maxRadius = 2; // Max particle radius for dots
-        const symbolSize = 18; // Font size for symbols
-        const maxSpeed = 0.5; // Max particle speed
-        const connectDistance = 100; // Max distance to connect particles with a line
-        const mouseRadius = 100; // Radius for mouse interaction
-        const mouseForceMultiplier = 12; // Further increased for super higher sensitivity
-        let mouse = { x: null, y: null };
+        const numberOfParticles = 85; // Total number of particles, slightly increased to compensate for removed infinity
+        const minParticleSpeed = 0.1; // Minimum continuous speed for particles
 
-        // Unicode symbols for research-related items (updated to only infinity)
-        const researchSymbols = ['∞'];
-
-        function resizeCanvas() {
+        // Set canvas dimensions
+        function setCanvasDimensions() {
             canvas.width = window.innerWidth;
-            canvas.height = document.getElementById('hero').offsetHeight; // Match hero section height
-            initParticles(); // Re-initialize particles on resize
+            canvas.height = window.innerHeight;
         }
+        setCanvasDimensions();
+        window.addEventListener('resize', setCanvasDimensions);
 
+        // Particle constructor
         class Particle {
-            constructor(x, y, radius, color, velocityX, velocityY, type = 'dot', symbol = null) {
+            constructor(x, y, vx, vy, radius, color) { // Removed 'type' from constructor as it's always 'circle' now
                 this.x = x;
                 this.y = y;
+                this.vx = vx;
+                this.vy = vy;
                 this.radius = radius;
                 this.color = color;
-                this.velocityX = velocityX;
-                this.velocityY = velocityY;
-                this.type = type;
-                this.symbol = symbol;
+                this.opacity = Math.random() * 0.5 + 0.3; // Random opacity for subtle effect
             }
 
             draw() {
-                if (this.type === 'dot') {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = this.color;
-                    ctx.fill();
-                } else {
-                    ctx.font = `${symbolSize}px 'Oswald', sans-serif`; // Use Oswald font for symbols
-                    ctx.fillStyle = this.color;
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'middle';
-                    ctx.fillText(this.symbol, this.x, this.y);
-                }
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.closePath();
+                ctx.restore();
             }
 
             update() {
-                // Update position
-                this.x += this.velocityX;
-                this.y += this.velocityY;
+                this.x += this.vx;
+                this.y += this.vy;
 
-                // Loop particles around the screen
-                if (this.x - this.radius > canvas.width) {
-                    this.x = 0 - this.radius;
-                } else if (this.x + this.radius < 0) {
-                    this.x = canvas.width + this.radius;
+                // Add friction/decay to prevent exponential speed increase and ensure smooth deceleration
+                this.vx *= 0.98; // Slightly less aggressive friction
+                this.vy *= 0.98;
+
+                // Ensure particles always have a minimum continuous speed
+                if (Math.abs(this.vx) < minParticleSpeed) {
+                    // Re-randomize direction, ensure minimum speed
+                    this.vx = (Math.random() - 0.5) * 0.5;
+                    if (Math.abs(this.vx) < minParticleSpeed) this.vx = Math.sign(this.vx) * minParticleSpeed || minParticleSpeed;
                 }
-                if (this.y - this.radius > canvas.height) {
-                    this.y = 0 - this.radius;
-                } else if (this.y + this.radius < 0) {
-                    this.y = canvas.height + this.radius;
+                if (Math.abs(this.vy) < minParticleSpeed) {
+                    // Re-randomize direction, ensure minimum speed
+                    this.vy = (Math.random() - 0.5) * 0.5;
+                    if (Math.abs(this.vy) < minParticleSpeed) this.vy = Math.sign(this.vy) * minParticleSpeed || minParticleSpeed;
                 }
 
-                // Mouse interaction
-                let distanceX = mouse.x - this.x;
-                let distanceY = mouse.y - this.y;
-                let distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
-
-                if (distance < mouseRadius && mouse.x !== null) {
-                    let forceDirectionX = distanceX / distance;
-                    let forceDirectionY = distanceY / distance;
-                    let force = (mouseRadius - distance) / mouseRadius;
-                    let directionX = forceDirectionX * force * mouseForceMultiplier; // Use multiplier here
-                    let directionY = forceDirectionY * force * mouseForceMultiplier; // Use multiplier here
-
-                    this.x -= directionX;
-                    this.y -= directionY;
-                }
+                // Wrap particles around the screen
+                if (this.x - this.radius > canvas.width) this.x = -this.radius;
+                if (this.x + this.radius < 0) this.x = canvas.width + this.radius;
+                if (this.y - this.radius > canvas.height) this.y = -this.radius;
+                if (this.y + this.radius < 0) this.y = canvas.height + this.radius;
             }
         }
 
-        function initParticles() {
+        // Create particles
+        function createParticles() {
             particles = [];
-            const purpleColor = 'rgba(102, 51, 153, 0.3)'; // Purple with 30% opacity
-
-            // Create symbols first to ensure exactly `symbolCount` symbols
-            for (let i = 0; i < symbolCount; i++) {
-                let x = Math.random() * canvas.width;
-                let y = Math.random() * canvas.height;
-                let velocityX = (Math.random() - 0.5) * maxSpeed * 2;
-                let velocityY = (Math.random() - 0.5) * maxSpeed * 2;
-                // Since researchSymbols only contains '∞', it will always pick infinity
-                const randomSymbol = researchSymbols[Math.floor(Math.random() * researchSymbols.length)];
-                particles.push(new Particle(x, y, symbolSize / 2, purpleColor, velocityX, velocityY, 'symbol', randomSymbol));
-            }
-
-            // Create remaining particles as dots
-            for (let i = 0; i < numParticles - symbolCount; i++) {
-                let radius = Math.random() * maxRadius + 1; // Radius between 1 and maxRadius+1
-                let x = Math.random() * (canvas.width - radius * 2) + radius;
-                let y = Math.random() * (canvas.height - radius * 2) + radius;
-                let velocityX = (Math.random() - 0.5) * maxSpeed * 2;
-                let velocityY = (Math.random() - 0.5) * maxSpeed * 2;
-                particles.push(new Particle(x, y, radius, purpleColor, velocityX, velocityY, 'dot'));
+            for (let i = 0; i < numberOfParticles; i++) { // Only create 'circle' particles
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                const vx = (Math.random() - 0.5) * 0.5; // Slower speed
+                const vy = (Math.random() - 0.5) * 0.5; // Slower speed
+                const radius = Math.random() * 3 + 1; // Smaller radius for points
+                const color = '#ADD8E6'; // Light blue color for points
+                particles.push(new Particle(x, y, vx, vy, radius, color));
             }
         }
 
-        function connectParticles() {
-            for (let a = 0; a < particles.length; a++) {
-                for (let b = a; b < particles.length; b++) {
-                    let distance = Math.sqrt(
-                        (particles[a].x - particles[b].x) ** 2 +
-                        (particles[a].y - particles[b].y) ** 2
-                    );
+        // Animation loop
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
 
-                    if (distance < connectDistance) {
-                        // Fading opacity for purple lines
-                        ctx.strokeStyle = `rgba(102, 51, 153, ${0.3 - (distance / connectDistance) * 0.2})`; // Purple with fading opacity
-                        ctx.lineWidth = 0.5;
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            // Draw lines between close particles (optional, but adds to the "connected" feel)
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const p1 = particles[i];
+                    const p2 = particles[j];
+                    const distance = Math.sqrt((p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2);
+
+                    if (distance < 100) { // Only draw lines for particles within 100px
                         ctx.beginPath();
-                        ctx.moveTo(particles[a].x, particles[a].y);
-                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.moveTo(p1.x, p1.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(173, 216, 230, ${0.5 - (distance / 100) * 0.5})`; // Fading line
+                        ctx.lineWidth = 0.5;
                         ctx.stroke();
+                        ctx.closePath();
                     }
                 }
             }
+
+            requestAnimationFrame(animateParticles);
         }
 
-        function animate() {
-            requestAnimationFrame(animate);
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // Initialize and start animation
+        createParticles();
+        animateParticles();
 
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-                particles[i].draw();
-            }
-            connectParticles();
-        }
+        // Mouse interaction: Moved listener to heroSection for broader coverage
+        heroSection.addEventListener('mousemove', (event) => {
+            // Get bounding rectangle of the hero section to calculate mouse position relative to it
+            const rect = heroSection.getBoundingClientRect();
+            const mouseX = event.clientX - rect.left;
+            const mouseY = event.clientY - rect.top;
 
-        // Event Listeners
-        window.addEventListener('resize', () => {
-            resizeCanvas();
-            // Re-center mouse position if it was active
-            if (mouse.x !== null) {
-                // Adjust mouse position relative to new canvas size
-                const heroRect = document.getElementById('hero').getBoundingClientRect();
-                mouse.x = event.clientX - heroRect.left;
-                mouse.y = event.clientY - heroRect.top;
-            }
+            // Add a subtle effect, e.g., slightly push particles away from mouse
+            particles.forEach(p => {
+                const dx = p.x - mouseX;
+                const dy = p.y - mouseY;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 100) { // Affect particles within 100px of mouse
+                    const force = 0.5 / dist; // Increased force for more sensitivity
+                    p.vx += dx * force;
+                    p.vy += dy * force;
+                }
+            });
         });
-
-        // Update mouse position on mousemove within the hero section
-        document.getElementById('hero').addEventListener('mousemove', (event) => {
-            const heroRect = document.getElementById('hero').getBoundingClientRect();
-            mouse.x = event.clientX - heroRect.left;
-            mouse.y = event.clientY - heroRect.top;
-        });
-
-        // Reset mouse position when mouse leaves the hero section
-        document.getElementById('hero').addEventListener('mouseleave', () => {
-            mouse.x = null;
-            mouse.y = null;
-        });
-
-        // Initialize on load
-        window.onload = () => {
-            resizeCanvas();
-            animate();
-        };
-        // --- End Interactive Background Canvas Script ---
     </script>
 </body>
 
