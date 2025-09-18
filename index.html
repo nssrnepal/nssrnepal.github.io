@@ -89,7 +89,7 @@
             padding: 0.5rem 1rem;
             border-radius: 0.5rem;
             transition: background-color 0.3s ease, color 0.3s ease;
-            background-color: transparent;
+            background-color: transparent; 
         }
 
         .nav-link:hover {
@@ -155,7 +155,7 @@
             padding-left: 1.5rem; /* Indent sub-items */
             padding-top: 0.25rem;
             padding-bottom: 0.25rem;
-            background-color: transparent;
+            background-color: transparent; 
         }
 
         .mobile-dropdown-content a {
@@ -330,10 +330,21 @@
             border: 0;
         }
 
-        /* Ensure video takes full width on smaller screens */
+        /* Specific responsive adjustments for the About Us section */
         @media (max-width: 767px) {
-            .about-us-video-wrapper {
-                width: 100%; /* Ensure the video wrapper takes full width on mobile */
+            .about-us-section-content {
+                flex-direction: column; /* Stack children vertically on small screens */
+            }
+
+            .about-us-section-content > div {
+                width: 100%; /* Make both text and video take full width */
+            }
+            .about-us-video-container {
+                order: 2; /* Ensure video comes after text on small screens */
+                margin-top: 2rem; /* Add space between text and video */
+            }
+            .about-us-text-container {
+                order: 1; /* Ensure text comes before video on small screens */
             }
         }
     </style>
@@ -470,8 +481,8 @@
     <!-- About Us Section (now includes Our Impact) -->
     <section id="about" class="py-16 md:py-24 bg-gray-50 animated-section">
         <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row items-center gap-12 mb-16">
-                <div class="md:w-1/2 text-lg leading-relaxed text-gray-700 w-full"> <!-- Ensured text takes full width on mobile -->
+            <div class="flex flex-col md:flex-row items-center gap-12 mb-16 about-us-section-content">
+                <div class="md:w-1/2 text-lg leading-relaxed text-gray-700 w-full about-us-text-container">
                     <p class="mb-6 text-justify">
                         The Nepalese Society of Student Researchers (NSSR) is a nonprofit, youth-led membership
                         organization established under the Companies Act, 2063 of Nepal. Dedicated to fostering a
@@ -665,11 +676,11 @@
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-10">
         <div class="container mx-auto px-4 text-sm">
+            <!-- For small screens, use a single column grid. For medium screens and up, use 3 columns. -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
                 <!-- Column 1: Logo and Follow Us -->
                 <div class="flex flex-col items-center md:items-start text-center md:text-left">
                     <img src="photos/logonobg.png" alt="NSSR Logo" class="h-32 mb-4 -ml-4">
-                    <!-- Corrected path for logonobg.png -->
                     <h3 class="text-xl font-semibold mb-4">Follow Us</h3>
                     <div class="flex space-x-4 justify-center md:justify-start">
                         <a href="#" class="text-white hover:text-blue-200 text-2xl transition-colors"><i
